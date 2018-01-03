@@ -50,9 +50,11 @@ extern int yydebug;
     OPT_GPERM = 260,
     OPT_OPERM = 261,
     OPT_OPTIONS = 262,
-    NUMBER = 263,
-    WORD = 264,
-    EOL = 265
+    OPT_TRIPLE = 263,
+    OPT_FOUR_TUPLE = 264,
+    NUMBER = 265,
+    WORD = 266,
+    EOL = 267
   };
 #endif
 

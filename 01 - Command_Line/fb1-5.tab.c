@@ -65,6 +65,13 @@
 #line 3 "fb1-5.y" /* yacc.c:339  */
 
 #  include <stdio.h>
+#  include <string.h>
+#  include <stdlib.h>
+
+
+void process_tuple_opts(char* opts);
+void reset ();
+
 
 int R = 0; //recursive
 int user_perm = 0; //user user_perm
@@ -73,7 +80,7 @@ int other_perm = 0; //other other perm
 int options = 0; //option val
 char* file;
 
-#line 77 "fb1-5.tab.c" /* yacc.c:339  */
+#line 84 "fb1-5.tab.c" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -113,9 +120,11 @@ extern int yydebug;
     OPT_GPERM = 260,
     OPT_OPERM = 261,
     OPT_OPTIONS = 262,
-    NUMBER = 263,
-    WORD = 264,
-    EOL = 265
+    OPT_TRIPLE = 263,
+    OPT_FOUR_TUPLE = 264,
+    NUMBER = 265,
+    WORD = 266,
+    EOL = 267
   };
 #endif
 
@@ -135,7 +144,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 139 "fb1-5.tab.c" /* yacc.c:358  */
+#line 148 "fb1-5.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -377,21 +386,21 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  2
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   10
+#define YYLAST   23
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  11
+#define YYNTOKENS  13
 /* YYNNTS -- Number of nonterminals.  */
-#define YYNNTS  2
+#define YYNNTS  6
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  3
+#define YYNRULES  17
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  4
+#define YYNSTATES  24
 
 /* YYTRANSLATE[YYX] -- Symbol number corresponding to YYX as returned
    by yylex, with out-of-bounds checking.  */
 #define YYUNDEFTOK  2
-#define YYMAXUTOK   265
+#define YYMAXUTOK   267
 
 #define YYTRANSLATE(YYX)                                                \
   ((unsigned int) (YYX) <= YYMAXUTOK ? yytranslate[YYX] : YYUNDEFTOK)
@@ -426,14 +435,15 @@ static const yytype_uint8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
-       5,     6,     7,     8,     9,    10
+       5,     6,     7,     8,     9,    10,    11,    12
 };
 
 #if YYDEBUG
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    21,    21,    23
+       0,    29,    29,    30,    31,    34,    37,    38,    41,    42,
+      43,    44,    45,    46,    47,    50,    51,    52
 };
 #endif
 
@@ -443,7 +453,9 @@ static const yytype_uint8 yyrline[] =
 static const char *const yytname[] =
 {
   "$end", "error", "$undefined", "OPT_RECUR", "OPT_UPERM", "OPT_GPERM",
-  "OPT_OPERM", "OPT_OPTIONS", "NUMBER", "WORD", "EOL", "$accept", "input", YY_NULLPTR
+  "OPT_OPERM", "OPT_OPTIONS", "OPT_TRIPLE", "OPT_FOUR_TUPLE", "NUMBER",
+  "WORD", "EOL", "$accept", "input", "command", "opt", "opt_val",
+  "opt_tuple", YY_NULLPTR
 };
 #endif
 
@@ -453,14 +465,14 @@ static const char *const yytname[] =
 static const yytype_uint16 yytoknum[] =
 {
        0,   256,   257,   258,   259,   260,   261,   262,   263,   264,
-     265
+     265,   266,   267
 };
 # endif
 
-#define YYPACT_NINF -1
+#define YYPACT_NINF -5
 
 #define yypact_value_is_default(Yystate) \
-  (!!((Yystate) == (-1)))
+  (!!((Yystate) == (-5)))
 
 #define YYTABLE_NINF -1
 
@@ -471,7 +483,9 @@ static const yytype_uint16 yytoknum[] =
      STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-      -1,     0,    -1,    -1
+      -5,     0,    -5,    -2,    -5,    -4,     5,    -1,     6,     7,
+       8,    -5,    -5,    -5,    -2,    -5,    -5,    -5,    -5,    -5,
+      -5,    -5,    -5,    -5
 };
 
   /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -479,19 +493,21 @@ static const yytype_int8 yypact[] =
      means the default is an error.  */
 static const yytype_uint8 yydefact[] =
 {
-       2,     0,     1,     3
+       2,     0,     1,     6,     4,     0,    15,     0,     0,     0,
+       0,    16,    17,     5,     6,    14,     3,     8,    13,     9,
+      10,    11,    12,     7
 };
 
   /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-      -1,    -1
+      -5,    -5,    -5,     9,    -5,     4
 };
 
   /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-      -1,     1
+      -1,     1,     5,    13,    14,    15
 };
 
   /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -499,33 +515,39 @@ static const yytype_int8 yydefgoto[] =
      number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_uint8 yytable[] =
 {
-       2,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       3
+       2,     6,     7,     8,     9,    10,    11,    12,    16,    19,
+      18,     3,     4,    11,    12,    17,    20,    21,    22,     0,
+       0,     0,     0,    23
 };
 
 static const yytype_int8 yycheck[] =
 {
-       0,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
-      10
+       0,     3,     4,     5,     6,     7,     8,     9,    12,    10,
+       6,    11,    12,     8,     9,    10,    10,    10,    10,    -1,
+      -1,    -1,    -1,    14
 };
 
   /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
      symbol of state STATE-NUM.  */
 static const yytype_uint8 yystos[] =
 {
-       0,    12,     0,    10
+       0,    14,     0,    11,    12,    15,     3,     4,     5,     6,
+       7,     8,     9,    16,    17,    18,    12,    10,    18,    10,
+      10,    10,    10,    16
 };
 
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_uint8 yyr1[] =
 {
-       0,    11,    12,    12
+       0,    13,    14,    14,    14,    15,    16,    16,    17,    17,
+      17,    17,    17,    17,    17,    18,    18,    18
 };
 
   /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
 static const yytype_uint8 yyr2[] =
 {
-       0,     2,     0,     2
+       0,     2,     0,     3,     2,     2,     0,     2,     2,     2,
+       2,     2,     2,     2,     1,     0,     1,     1
 };
 
 
@@ -1202,13 +1224,79 @@ yyreduce:
   switch (yyn)
     {
         case 3:
-#line 23 "fb1-5.y" /* yacc.c:1646  */
+#line 30 "fb1-5.y" /* yacc.c:1646  */
+    { printf("File = %s | R = %d | User_Perm = %d | Group_Perm = %d | Other_Perm = %d | Options = %d\n\n> ", file, R, user_perm, group_perm, other_perm, options); free(file); reset();}
+#line 1230 "fb1-5.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 4:
+#line 31 "fb1-5.y" /* yacc.c:1646  */
     { printf("> "); }
-#line 1208 "fb1-5.tab.c" /* yacc.c:1646  */
+#line 1236 "fb1-5.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 5:
+#line 34 "fb1-5.y" /* yacc.c:1646  */
+    {file = (yyvsp[-1]); printf("1) %s\n", (yyvsp[-1])); }
+#line 1242 "fb1-5.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 8:
+#line 41 "fb1-5.y" /* yacc.c:1646  */
+    {(yyval) = (yyvsp[0]); R = (yyvsp[0]);}
+#line 1248 "fb1-5.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 9:
+#line 42 "fb1-5.y" /* yacc.c:1646  */
+    {(yyval) = (yyvsp[0]); user_perm = (yyvsp[0]);}
+#line 1254 "fb1-5.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 10:
+#line 43 "fb1-5.y" /* yacc.c:1646  */
+    {(yyval) = (yyvsp[0]); group_perm = (yyvsp[0]);}
+#line 1260 "fb1-5.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 11:
+#line 44 "fb1-5.y" /* yacc.c:1646  */
+    {(yyval) = (yyvsp[0]); other_perm = (yyvsp[0]);}
+#line 1266 "fb1-5.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 12:
+#line 45 "fb1-5.y" /* yacc.c:1646  */
+    {(yyval) = (yyvsp[0]); options = (yyvsp[0]);}
+#line 1272 "fb1-5.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 13:
+#line 46 "fb1-5.y" /* yacc.c:1646  */
+    {printf("2) opt_tuple = %s\n", (yyvsp[0])); free((yyvsp[0]));}
+#line 1278 "fb1-5.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 14:
+#line 47 "fb1-5.y" /* yacc.c:1646  */
+    {printf("3) opt_tuple = %s\n", (yyvsp[0])); free((yyvsp[0]));}
+#line 1284 "fb1-5.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 16:
+#line 51 "fb1-5.y" /* yacc.c:1646  */
+    {process_tuple_opts((yyvsp[0]));}
+#line 1290 "fb1-5.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 17:
+#line 52 "fb1-5.y" /* yacc.c:1646  */
+    {process_tuple_opts((yyvsp[0]));}
+#line 1296 "fb1-5.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1212 "fb1-5.tab.c" /* yacc.c:1646  */
+#line 1300 "fb1-5.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1436,7 +1524,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 38 "fb1-5.y" /* yacc.c:1906  */
+#line 54 "fb1-5.y" /* yacc.c:1906  */
 
 main()
 {
@@ -1447,4 +1535,33 @@ main()
 yyerror(char *s)
 {
   fprintf(stderr, "error: %s\n", s);
+}
+
+
+
+void reset(){
+    R = 0;
+    user_perm = 0;
+    group_perm = 0;
+    other_perm = 0;
+    options = 0;
+    file = NULL;
+    
+}
+
+
+void process_tuple_opts(char* opts){
+    if(strlen(opts) == 3){
+        int temp = atoi(opts);
+        user_perm = (temp / 100) % 10;
+        group_perm = (temp / 10) % 10;
+        other_perm = (temp / 1) % 10;
+    }else{
+        int temp = atoi(opts);
+        options = (temp / 1000) % 10;
+        user_perm = (temp / 100) % 10;
+        group_perm = (temp / 10) % 10;
+        other_perm = (temp / 1) % 10;
+    }
+    
 }
