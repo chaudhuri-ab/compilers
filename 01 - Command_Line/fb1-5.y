@@ -21,34 +21,33 @@ char* file;
 /* declare tokens */
 %token OPT_RECUR OPT_UPERM OPT_GPERM OPT_OPERM OPT_OPTIONS
 %token OPT_TRIPLE OPT_FOUR_TUPLE
-%token NUMBER WORD
+%token PERM_NUM WORD
 %token EOL
 
 %%
 
 input: /* nothing */
- | input command EOL { printf("File = %s | R = %d | User_Perm = %d | Group_Perm = %d | Other_Perm = %d | Options = %d\n\n> ", file, R, user_perm, group_perm, other_perm, options); free(file); reset();}
+ | input command EOL { printf("\n\nFile = %s | R = %d | User_Perm = %d | Group_Perm = %d | Other_Perm = %d | Options = %d\n\n> ", file, R, user_perm, group_perm, other_perm, options); free(file); reset();}
  | input EOL { printf("> "); } /* blank line or a comment */
  ;
 
-command: WORD opt {file = $1; printf("1) %s\n", $1); }
+command: WORD OPT_RECUR opt {file = $1; R = 1; printf("1) %s\n", $1); }
+ | WORD opt {file = $1; printf("1) %s\n", $1); }
  ;
 
  opt: 
  | opt_val opt
  ;
  
- opt_val: OPT_RECUR NUMBER {$$ = $2; R = $2;}
- | OPT_UPERM NUMBER {$$ = $2; user_perm = $2;}
- | OPT_GPERM NUMBER {$$ = $2; group_perm = $2;}
- | OPT_OPERM NUMBER {$$ = $2; other_perm = $2;}
- | OPT_OPTIONS NUMBER {$$ = $2; options = $2;} 
- | OPT_RECUR NUMBER opt_tuple {printf("2) opt_tuple = %s\n", $3); free($3); /*pass up value to parent prod*/}
+ opt_val: OPT_UPERM PERM_NUM {$$ = $2; user_perm = $2;}
+ | OPT_GPERM PERM_NUM {$$ = $2; group_perm = $2;}
+ | OPT_OPERM PERM_NUM {$$ = $2; other_perm = $2;}
+ | OPT_OPTIONS PERM_NUM {$$ = $2; options = $2;} 
  | opt_tuple {printf("3) opt_tuple = %s\n", $1); free($1);}
  ;
  
  opt_tuple: 
- |OPT_TRIPLE {process_tuple_opts($1);}
+ | OPT_TRIPLE {process_tuple_opts($1);}
  | OPT_FOUR_TUPLE {process_tuple_opts($1);}
  
 %%

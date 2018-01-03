@@ -52,7 +52,7 @@ extern int yydebug;
     OPT_OPTIONS = 262,
     OPT_TRIPLE = 263,
     OPT_FOUR_TUPLE = 264,
-    NUMBER = 265,
+    PERM_NUM = 265,
     WORD = 266,
     EOL = 267
   };
