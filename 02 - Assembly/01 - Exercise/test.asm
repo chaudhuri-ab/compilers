@@ -92,7 +92,6 @@ SECTION .text
             add     esp, 4
             
             mov     ecx, 10
-            
         .beg_loop:
             push    ecx
             push    test_str2
