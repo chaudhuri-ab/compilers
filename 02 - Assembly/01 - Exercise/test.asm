@@ -2,6 +2,7 @@
 ;http://www.nasm.us/doc/nasmdoc0.html
 ;http://www.posix.nl/linuxassembly/nasmdochtml/nasmdoc0.html
 ;https://godbolt.org/
+;https://linux.die.net/man/1/objdump
 
 extern printf
 extern putchar
