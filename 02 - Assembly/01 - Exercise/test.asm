@@ -1,4 +1,3 @@
-
 ;http://www.nasm.us/doc/nasmdoc0.html
 ;http://www.posix.nl/linuxassembly/nasmdochtml/nasmdoc0.html
 ;https://godbolt.org/
@@ -21,6 +20,8 @@ SECTION .data
 
         done: db 10, "DONE!", 10, 0
         done_len equ $-done
+        
+        result_str: db 10,10,"%2d) Result = %d", 10, 10, 0
 
 
 SECTION .bss			; Section containing uninitialized data
@@ -64,6 +65,9 @@ SECTION .text
             add     esp, 4	; pop int
             
             
+            call sample_if      ; if code snippets
+            
+            
             mov     esp, ebp	; takedown stack frame
             pop     ebp		; same as "leave" op
 
@@ -72,7 +76,9 @@ SECTION .text
             
 
     test_fcn:
-            enter   0, 1
+            push    ebp		; set up stack frame
+            mov     ebp, esp
+            
             mov     ecx, 10
         .beg_loop:
             push    ecx
@@ -82,12 +88,14 @@ SECTION .text
             pop     ecx
             loop    .beg_loop, ecx
         
-            leave
+            mov     esp, ebp	; takedown stack frame
+            pop     ebp		; same as "leave" op
+            mov	    eax,0	;  normal, no error, return value
             ret
             
 
     test_fcn2:
-            enter   0, 1
+            enter   0, 0
             push    10
             call    putchar
             add     esp, 4
@@ -107,6 +115,47 @@ SECTION .text
             call    printf
             add     esp, 4	; pop int
             
+            leave
+            ret
+            
+            
+    sample_if:
+        ;prints first local variable if greater than or equal to 100
+        ;else prints 50 if varaible is greater than or equal to 50 but less than 100
+        ;else prints 0 if variable is less than 50
+        
+            enter   0, 0
+            push    177          ; condition {22, 77, 120}
+            
+            mov     eax, [ebp - 4]
+            cmp     eax, 100
+            jae     near .label1
+            
+            cmp     eax, 50
+            jae     near .label2
+                        
+            push    0
+            jmp     .continue_fcn
+
+            
+        .label1: ;if greater than 100 print result = 100
+            push    eax
+            jmp     .continue_fcn
+            
+           
+        .label2: ;if greater than 100 print result = 100
+            push    50
+            jmp     .continue_fcn
+           
+           
+        .continue_fcn:
+            push    1
+            push    result_str
+            call    printf
+            add     esp, 8	; pop int and string
+            
+            
+            add     esp, 4	; pop condition
             leave
             ret
 
