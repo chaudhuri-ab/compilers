@@ -5,7 +5,7 @@
 int main(int args, char* argc[]){
 	
 
-	printf("hello!!!");
+	run_tests();
 	
 	
 }

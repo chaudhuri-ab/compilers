@@ -13,5 +13,6 @@ void free_linked_list(struct linked_list* list);
 
 /*test.c*/
 void run_tests();
+void linked_list_tests();
 
 #endif

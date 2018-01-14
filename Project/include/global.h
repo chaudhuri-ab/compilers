@@ -9,7 +9,7 @@
 
 
 #include "ds_linked_list.h"
-#include "test.c"
+#include "test.h"
 #include "prototypes.h"
 
 

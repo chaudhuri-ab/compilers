@@ -163,7 +163,7 @@ void print_list(struct linked_list* list){
 			
 	}
 	
-	printf("<=> Tail");
+	printf("Tail\n\n");
 	
 }
 
