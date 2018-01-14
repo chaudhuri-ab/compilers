@@ -44,6 +44,9 @@ void linked_list_tests(){
 		index++;
 	}
 	
+	if(list->count != max)
+		error(1, 1, "Linked List Failed Test 1b");
+		
 	//Print List
 	print_list(list);
 	
@@ -65,6 +68,9 @@ void linked_list_tests(){
 	if(list->head->next != list->tail)
 		error(1, 1, "Linked List Failed Test 2b");
 
+	if(list->count != 0)
+		error(1, 1, "Linked List Failed Test 2c");
+		
 	//Print List
 	print_list(list);
 	
@@ -88,6 +94,9 @@ void linked_list_tests(){
 		index--;
 	}
 	
+	if(list->count != max)
+		error(1, 1, "Linked List Failed Test 3b");
+		
 	//Print List
 	print_list(list);
 	
@@ -109,6 +118,9 @@ void linked_list_tests(){
 	if(list->head->next != list->tail)
 		error(1, 1, "Linked List Failed Test 4b");
 
+	if(list->count != 0)
+		error(1, 1, "Linked List Failed Test 4c");
+		
 	//Print List
 	print_list(list);
 }

@@ -4,6 +4,7 @@
 struct linked_list{
 	struct linked_list_node* head;
 	struct linked_list_node* tail;
+	size_t count;
 };
 
 union val{

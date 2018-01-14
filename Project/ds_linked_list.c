@@ -7,7 +7,7 @@
  */
  
 struct linked_list_node* create_linked_list_node(union val value){
-	struct linked_list_node* node = (struct linked_list_node*) malloc(sizeof(struct linked_list_node));
+	struct linked_list_node* node = (struct linked_list_node*) calloc(1, sizeof(struct linked_list_node));
 	
 	if(node == NULL){
 		error(1, 12, "Creating Linked List Node Failed");
@@ -60,6 +60,8 @@ struct linked_list* create_linked_list(){
 	list->tail->prev = list->head;
 	list->tail->next = NULL;
 	
+	list->count = 0;
+	
 	return list;
 }
 
@@ -81,6 +83,8 @@ void queue(struct linked_list* list, struct linked_list_node* node){
 	node->next = list->tail;
 	
 	old_last_node->next = node;
+	
+	list->count++;
 }
 
 
@@ -102,6 +106,8 @@ struct linked_list_node* dequeue(struct linked_list* list){
 	
 	list->head->next = old_first_node->next;
 	old_first_node->next->prev = list->head;
+	
+	list->count--;
 	
 	return old_first_node;
 	
@@ -125,6 +131,8 @@ void push(struct linked_list* list, struct linked_list_node* node){
 	node->next = old_first_node;
 	
 	old_first_node->prev = node;
+
+	list->count++;
 		
 }
 
@@ -163,7 +171,9 @@ void print_list(struct linked_list* list){
 			
 	}
 	
-	printf("Tail\n\n");
+	printf("Tail\n");
+	printf("List Count -> %d\n\n", (int)list->count);
+
 	
 }
 
