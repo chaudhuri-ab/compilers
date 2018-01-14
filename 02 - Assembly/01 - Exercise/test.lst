@@ -133,7 +133,7 @@
    133                                          ;else prints 0 if variable is less than 50
    134                                          
    135 000000DF C8000000                            enter   0, 0
-   136 000000E3 68B1000000                          push    177          ; condition {22, 77, 120}
+   136 000000E3 68AE000000                          push    174          ; condition {22, 77, 120}
    137                                              
    138 000000E8 8B45FC                              mov     eax, [ebp - 4]
    139 000000EB 3D64000000                          cmp     eax, 100

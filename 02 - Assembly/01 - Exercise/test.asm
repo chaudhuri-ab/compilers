@@ -125,7 +125,7 @@ SECTION .text
         ;else prints 0 if variable is less than 50
         
             enter   0, 0
-            push    177          ; condition {22, 77, 120}
+            push    174          ; condition {22, 77, 120}
             
             mov     eax, [ebp - 4]
             cmp     eax, 100
