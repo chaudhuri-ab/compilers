@@ -5,6 +5,7 @@
 
 extern printf
 extern putchar
+extern strlen
 
 SECTION .data		
         a:	dd	5
@@ -18,7 +19,7 @@ SECTION .data
         test_str2: db "%2d) Test FCN2 Called!!!", 10, 0
         test_str2_len equ $-test_str2
 
-        done: db 10, "DONE!", 10, 0
+        done: db 10, "DONE!!", 10, 0
         done_len equ $-done
         
         result_str: db 10,10,"%2d) Result = %d", 10, 10, 0
@@ -67,6 +68,17 @@ SECTION .text
             
             call sample_if      ; if code snippets
             
+            
+                    
+            push    done        ; Get length of done string
+            call    strlen
+            add     esp, 4
+            
+            push    eax
+            push    2
+            push    result_str
+            call    printf      ; Print length of done string
+            add     esp, 12     
             
             mov     esp, ebp	; takedown stack frame
             pop     ebp		; same as "leave" op
