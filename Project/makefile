@@ -1,5 +1,5 @@
 all: *.c
-	gcc -o dist/app $^ -I . -I include/ -lm
+	gcc -o dist/app $^ -I . -I include/ -lm -g
 
 	
 clean:

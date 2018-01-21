@@ -25,11 +25,6 @@ struct linked_list_node* create_linked_list_node(union val value){
  
 void free_linked_list_node(struct linked_list_node* node){
 	union val value = node->value;
-	
-	//Free any allocated memory
-	free(value.pointer);
-	
-	
 	//free node
 	free(node);	
 }

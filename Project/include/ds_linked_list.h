@@ -16,7 +16,7 @@ union val{
 	unsigned long u_long_int;
 	float float_val;
 	double double_val;
-	void* pointer;
+	void* pointer; //Child Has To Free This
 };
 
 struct linked_list_node{
