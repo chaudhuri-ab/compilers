@@ -1,5 +1,7 @@
 #include "global.h"
 
+//TODO Optimize for resize at n/2 and n/4
+
 struct hash_table* create_hash_table(size_t size) {
     size_t i;
     struct hash_table* hash_tab = calloc(1, sizeof (struct hash_table));
