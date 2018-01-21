@@ -4,11 +4,13 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <math.h> 
 #include <error.h>
 
 
 
 #include "ds_linked_list.h"
+#include "ds_hash_table.h"
 #include "test.h"
 #include "prototypes.h"
 

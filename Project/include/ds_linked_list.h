@@ -16,7 +16,6 @@ union val{
 	unsigned long u_long_int;
 	float float_val;
 	double double_val;
-	char*	string;
 	void* pointer;
 };
 
