@@ -12,7 +12,7 @@ struct hash_table{
 /* What each entry will look like in the list*/
 struct hash_entry{
     size_t hashed_key; /*String Hashed Value*/
-    char* key_string;
+    char* key_string; /* Needs Freeing As Allocated on Heap*/
     union val data; /*Child Needs to Free Ptr*/
 };
 
