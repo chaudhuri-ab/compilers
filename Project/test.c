@@ -13,7 +13,7 @@ void run_tests() {
 }
 
 void hash_table_tests() {
-    struct symbol_entry* sym_entry;
+    struct symbol_tab_entry* sym_entry;
     union val value;
 
     printf("\n\nHT Test 1\n");
@@ -32,7 +32,7 @@ void hash_table_tests() {
 
     value.pointer = (void*) sym_entry;
     insert_value(hash_tab, "if2", value);
-    print_hash_table(hash_tab);
+    print_symbol_table(hash_tab);
 
     sym_entry = get_value(hash_tab, "if")->pointer;
     printf("Val = %ld\n", sym_entry->offset);

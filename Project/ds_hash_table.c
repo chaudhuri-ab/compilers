@@ -154,16 +154,16 @@ size_t insert_value(struct hash_table* hash_tab, char* key, union val data) {
  */
 void print_hash_table(struct hash_table* hash_tab) {
     size_t i;
-    struct linked_list** list = hash_tab->array;
+    struct linked_list** ptr_list = hash_tab->array;
     printf("Hash Entry Count = %03ld | Collision Count = %03ld | Max Chain Len = %03ld\n-------------------------\n", hash_tab->entry_count, hash_tab->collision_count, hash_tab->max_chain_len);
 
     //Initialize hash table
     for (i = 0; i < hash_tab->array_size; i++) {
         printf("Index: %3ld\n", i);
-
-        print_list(*(list + i));
+        print_list(*(ptr_list + i));
     }
 }
+
 
 /**
  * Free entry

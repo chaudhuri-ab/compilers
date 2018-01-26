@@ -3,6 +3,10 @@
 
 #include "ds_linked_list.h"
 
+/* symbol_tab.c */
+void print_symbol_table(struct hash_table* symbol_table);
+void print_symbol_tab_list (struct linked_list* list);
+
 
 /* ds_hash_table */
 struct hash_table* create_hash_table(size_t size);
