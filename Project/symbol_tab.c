@@ -1,5 +1,7 @@
 #include "global.h"
 
+
+
 /**
  * Print Symbol Table
  * @param hash_tab hash table
@@ -42,3 +44,5 @@ void print_symbol_tab_list(struct linked_list* list) {
 
 
 }
+
+

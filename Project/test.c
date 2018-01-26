@@ -16,7 +16,7 @@ void hash_table_tests() {
     struct symbol_tab_entry* sym_entry;
     union val value;
 
-    printf("\n\nHT Test 1\n");
+    printf("\n\n%sHT Test 1%s\n", KBLU, KNRM);
 
 
     struct hash_table* hash_tab = create_hash_table(10);
@@ -57,7 +57,7 @@ void linked_list_tests() {
     struct linked_list* list = create_linked_list();
 
     //Test 1 - Queue Values
-    printf("\n\nLL Test 1\n");
+    printf("\n\n%sLL Test 1%s\n", KBLU, KNRM);
     for (int i = 0; i < max; i++) {
         value.integer = i;
         queue(list, create_linked_list_node(value));
@@ -83,7 +83,7 @@ void linked_list_tests() {
     print_list(list);
 
     //Test 2 - Dequeue Values
-    printf("\n\nLL Test 2\n");
+    printf("\n\n%sLL Test 2%s\n", KBLU, KNRM);
 
     node = dequeue(list);
     //node->value.integer = 100; Force Test To Fail
@@ -107,7 +107,7 @@ void linked_list_tests() {
     print_list(list);
 
     //Test 3 - Push Values
-    printf("\n\nLL Test 3\n");
+    printf("\n\n%sLL Test 3%s\n", KBLU, KNRM);
     for (int i = 0; i < max; i++) {
         value.integer = i;
         push(list, create_linked_list_node(value));
@@ -133,7 +133,7 @@ void linked_list_tests() {
     print_list(list);
 
     //Test 2 - Pop Values
-    printf("\n\nTest 4\n");
+    printf("\n\n%sLL Test 4%s\n", KBLU, KNRM);
 
     node = pop(list);
     //node->value.integer = 100; Force Test To Fail
