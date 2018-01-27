@@ -1,4 +1,5 @@
 #include "global.h"
+
 /**
  * Run all automated tests
  */
@@ -31,13 +32,19 @@ void hash_table_tests() {
     insert_value(hash_tab, "if2", value);
     print_symbol_table(hash_tab);
 
-    sym_entry = get_value(hash_tab, "if").pointer;
+    bool found = false;
+    sym_entry = get_value(hash_tab, keywords[0], &found).pointer;
     printf("Val = %ld\n", sym_entry->offset);
 
-    sym_entry = get_value(hash_tab, "if2").pointer;
+    sym_entry = get_value(hash_tab, "if2", &found).pointer;
     printf("Val = %ld\n", sym_entry->offset);
     //free(sym_entry);
     free_hash_table(hash_tab);
+
+
+    printf("\n\n%sHT Test 1%s\n", KBLU, KNRM);
+    print_symbol_table(symbol_table);
+
 }
 
 /**

@@ -36,6 +36,9 @@ void print_symbol_table(struct hash_table* symbol_table) {
 
     //Initialize hash table
     for (i = 0; i < symbol_table->array_size; i++) {
+        if((*(ptr_list + i))->count == 0)
+            continue; //don't print blanks
+        
         printf("Index: %3ld\n", i);
         print_symbol_tab_list(*(ptr_list + i));
     }
@@ -51,7 +54,7 @@ void print_symbol_tab_list(struct linked_list* list) {
     struct linked_list_node* node = list->head->next;
     struct hash_entry* hash_entry;
     struct symbol_tab_entry* symbol_entry;
-
+    
     printf("Head %s<=>%s", KRED, KNRM);
     while (node != list->tail) {
         hash_entry = (struct hash_entry*) node->value.pointer;

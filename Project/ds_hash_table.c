@@ -125,16 +125,20 @@ struct linked_list_node* get_hash_entry_node(struct hash_table* hash_tab, char* 
  * 
  * @param hash_tab hash table
  * @param key key to look up
+ * @param is_found pointer to boolean indicating whether key was found
  * @return value (data of entry) 
  */
-union val get_value(struct hash_table* hash_tab, char* key) {
+union val get_value(struct hash_table* hash_tab, char* key, bool* is_found) {
     struct linked_list_node* node = get_hash_entry_node(hash_tab, key);
     if (node == NULL) {
         union val value;
         value.pointer = NULL;
-        return NULL;
-    } else
+        *is_found = false; 
+        return value;
+    } else{
+        *is_found = true;
         return (((struct hash_entry*) node->value.pointer)->data);
+    }
 }
 
 /**

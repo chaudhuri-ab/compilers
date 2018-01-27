@@ -7,17 +7,7 @@ struct linked_list{
 	size_t count;
 };
 
-union val{
-	char character;
-	unsigned char u_character;
-	int integer;
-	unsigned int u_integer;
-	long long_int;
-	unsigned long u_long_int;
-	float float_val;
-	double double_val;
-	void* pointer; //Child Has To Free This
-};
+
 
 struct linked_list_node{
 	struct linked_list_node* next;

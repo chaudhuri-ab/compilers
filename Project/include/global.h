@@ -6,15 +6,14 @@
 #include <stdlib.h>
 #include <math.h> 
 #include <error.h>
+#include <stdbool.h>
 
-
-
+#include "util.h"
 #include "ds_linked_list.h"
 #include "ds_hash_table.h"
 #include "test.h"
 #include "symbol_tab.h"
 #include "scanner.h"
-#include "util.h"
 #include "prototypes.h"
 
 

@@ -4,7 +4,7 @@
 
 int main(int args, char* argc[]){
 	
-
+        init();
 	run_tests();
 	
 	
