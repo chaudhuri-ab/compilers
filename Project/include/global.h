@@ -13,6 +13,7 @@
 #include "ds_hash_table.h"
 #include "test.h"
 #include "symbol_tab.h"
+#include "scanner.h"
 #include "util.h"
 #include "prototypes.h"
 

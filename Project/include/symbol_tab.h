@@ -7,6 +7,8 @@ struct symbol_tab_entry{
     size_t length;    
 };
 
+extern struct hash_table* symbol_table;
+#define SYM_TAB_SIZE 10
 
 #endif /* SYMBOL_TAB_H */
 

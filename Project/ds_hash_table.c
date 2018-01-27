@@ -6,6 +6,10 @@ struct hash_table* create_hash_table(size_t size) {
     size_t i;
     struct hash_table* hash_tab = calloc(1, sizeof (struct hash_table));
     hash_tab->array = calloc(size, sizeof (struct linked_list*));
+
+    if (hash_tab == NULL || hash_tab->array == NULL) {
+        error(1, 12, "Creating Hash Table Failed");
+    }
     hash_tab->array_size = size;
     struct linked_list** list = hash_tab->array;
 
@@ -75,11 +79,11 @@ size_t insert_entry(struct hash_table* hash_tab, struct hash_entry* entry) {
         //If chain length is bigger than max recorded update max
         if (hash_tab->max_chain_len < hash_tab->array[index]->count)
             hash_tab->max_chain_len = hash_tab->array[index]->count;
-        
+
         //Check For Collision
-        if(hash_tab->array[index]->count > 1)
+        if (hash_tab->array[index]->count > 1)
             hash_tab->collision_count++;
-        
+
     } else {
         free(node->value.pointer);
         node->value.pointer = entry;
@@ -121,14 +125,16 @@ struct linked_list_node* get_hash_entry_node(struct hash_table* hash_tab, char* 
  * 
  * @param hash_tab hash table
  * @param key key to look up
- * @return pointer to value (data of entry) 
+ * @return value (data of entry) 
  */
-union val* get_value(struct hash_table* hash_tab, char* key) {
+union val get_value(struct hash_table* hash_tab, char* key) {
     struct linked_list_node* node = get_hash_entry_node(hash_tab, key);
-    if (node == NULL)
+    if (node == NULL) {
+        union val value;
+        value.pointer = NULL;
         return NULL;
-    else
-        return &(((struct hash_entry*) node->value.pointer)->data);
+    } else
+        return (((struct hash_entry*) node->value.pointer)->data);
 }
 
 /**
@@ -163,7 +169,6 @@ void print_hash_table(struct hash_table* hash_tab) {
         print_list(*(ptr_list + i));
     }
 }
-
 
 /**
  * Free entry

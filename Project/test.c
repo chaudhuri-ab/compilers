@@ -1,6 +1,4 @@
 #include "global.h"
-#include "symbol_tab.h"
-
 /**
  * Run all automated tests
  */
@@ -20,12 +18,11 @@ void hash_table_tests() {
 
 
     struct hash_table* hash_tab = create_hash_table(10);
-
     sym_entry = calloc(1, sizeof (sym_entry));
     sym_entry->offset = 1001;
 
     value.pointer = (void*) sym_entry;
-    insert_value(hash_tab, "if", value);
+    insert_value(hash_tab, keywords[0], value);
 
     sym_entry = calloc(1, sizeof (sym_entry));
     sym_entry->offset = 1002;
@@ -34,10 +31,10 @@ void hash_table_tests() {
     insert_value(hash_tab, "if2", value);
     print_symbol_table(hash_tab);
 
-    sym_entry = get_value(hash_tab, "if")->pointer;
+    sym_entry = get_value(hash_tab, "if").pointer;
     printf("Val = %ld\n", sym_entry->offset);
 
-    sym_entry = get_value(hash_tab, "if2")->pointer;
+    sym_entry = get_value(hash_tab, "if2").pointer;
     printf("Val = %ld\n", sym_entry->offset);
     //free(sym_entry);
     free_hash_table(hash_tab);

@@ -9,3 +9,10 @@ int main(int args, char* argc[]){
 	
 	
 }
+
+
+void init(){
+    symbol_table_init();
+    
+    
+}
