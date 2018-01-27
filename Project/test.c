@@ -22,7 +22,7 @@ void hash_table_tests() {
 
     printf("\n\n%sHT Test 0%s\n", KBLU, KNRM);
     symbol_table_init();
-
+    
     print_symbol_table(token_val_to_str_lookup);
     print_symbol_table(symbol_table);
 
