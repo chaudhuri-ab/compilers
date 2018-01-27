@@ -7,7 +7,7 @@ struct hash_table* symbol_table;
  */
 void symbol_table_init() {
     int i;
-    int key_word_start_const = 300;
+    int keyword_start_const = 300;
     union val value;
     struct symbol_tab_entry* sym_tab_ent;
 
@@ -17,7 +17,7 @@ void symbol_table_init() {
     for (i = 0; i < KEYWORD_COUNT; i++) {
 
         sym_tab_ent = calloc(1, sizeof (struct symbol_tab_entry));
-        sym_tab_ent->type = key_word_start_const + i;
+        sym_tab_ent->type = keyword_start_const + i;
 
         value.pointer = sym_tab_ent;
         insert_value(symbol_table, keywords[i], value);

@@ -8,41 +8,42 @@ void run_tests() {
 
     linked_list_tests();
     hash_table_tests();
+    printf("\n\n%sPassed All Tests %s\n\n\n", KGRN, KNRM);
 
 }
 
 void hash_table_tests() {
-    struct symbol_tab_entry* sym_entry;
+    int i;
+    int keyword_start_const = 300;
     union val value;
+    struct symbol_tab_entry* sym_tab_ent;
+
+    bool is_found = false;
 
     printf("\n\n%sHT Test 1%s\n", KBLU, KNRM);
 
+    //Insert Keywords
+    for (i = 0; i < KEYWORD_COUNT; i++) {
+        is_found = false;
+        value = get_value(symbol_table, keywords[i], &is_found);
 
-    struct hash_table* hash_tab = create_hash_table(10);
-    sym_entry = calloc(1, sizeof (sym_entry));
-    sym_entry->offset = 1001;
+        if (!is_found)
+            error(1, 1, "Hash Table Failed Test 1");
 
-    value.pointer = (void*) sym_entry;
-    insert_value(hash_tab, keywords[0], value);
+        sym_tab_ent = (struct symbol_tab_entry*) value.pointer;
 
-    sym_entry = calloc(1, sizeof (sym_entry));
-    sym_entry->offset = 1002;
+        printf("%03d\n", sym_tab_ent->type);
+        if (sym_tab_ent->type != i + keyword_start_const)
+            error(1, 1, "Hash Table Failed Test 1 (Loc B)");
+    }
 
-    value.pointer = (void*) sym_entry;
-    insert_value(hash_tab, "if2", value);
-    print_symbol_table(hash_tab);
-
-    bool found = false;
-    sym_entry = get_value(hash_tab, keywords[0], &found).pointer;
-    printf("Val = %ld\n", sym_entry->offset);
-
-    sym_entry = get_value(hash_tab, "if2", &found).pointer;
-    printf("Val = %ld\n", sym_entry->offset);
-    //free(sym_entry);
-    free_hash_table(hash_tab);
+    printf("\n\n%sHT Test 2%s\n", KBLU, KNRM);
+    value = get_value(symbol_table, "HelloWorld!!!", &is_found);
+    if (is_found)
+        error(1, 1, "Hash Table Failed Test 2");
 
 
-    printf("\n\n%sHT Test 1%s\n", KBLU, KNRM);
+
     print_symbol_table(symbol_table);
 
 }
