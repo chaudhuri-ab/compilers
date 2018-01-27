@@ -50,10 +50,10 @@ int main(int argc, char** argv) {
     for (i = 0; i < num_states; i++) {
         if (i != 0)
             printf(",");
-        printf("{ ");
-        for (j = 0; j < max_printable - min_printable; j++) {
+        printf("{ /* Index %d */\n", i);
+        for (j = 0; j < max_printable - min_printable + 1; j++) {
             if (j != 0)
-                printf(",");
+                printf(",\n");
 
             printf(" {/* %c */%d, NULL}", min_printable + j, 0);
             
