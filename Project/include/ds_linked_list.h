@@ -12,7 +12,7 @@ struct linked_list{
 struct linked_list_node{
 	struct linked_list_node* next;
 	struct linked_list_node* prev;
-	union val value;
+	struct val value;
 };
 
 

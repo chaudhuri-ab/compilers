@@ -6,7 +6,7 @@
  * Returns a pointer to struct linked_list_node*
  */
 
-struct linked_list_node* create_linked_list_node(union val value) {
+struct linked_list_node* create_linked_list_node(struct val value) {
     struct linked_list_node* node = (struct linked_list_node*) calloc(1, sizeof (struct linked_list_node));
 
     if (node == NULL) {
@@ -22,7 +22,10 @@ struct linked_list_node* create_linked_list_node(union val value) {
  */
 
 void free_linked_list_node(struct linked_list_node* node) {
-    union val value = node->value;
+    if (node->value.pointer != NULL) {
+        free(node->value.pointer);
+        node->value.pointer = NULL;
+    }
     //free node
     free(node);
 }
@@ -35,7 +38,8 @@ void free_linked_list_node(struct linked_list_node* node) {
 
 struct linked_list* create_linked_list() {
     struct linked_list* list = (struct linked_list*) malloc(sizeof (struct linked_list));
-    union val default_value;
+    struct val default_value;
+    default_value.pointer = NULL;
     default_value.integer = -1;
     list->head = create_linked_list_node(default_value);
     list->tail = create_linked_list_node(default_value);
@@ -146,7 +150,7 @@ void print_list(struct linked_list* list) {
     struct linked_list_node* node = list->head->next;
 
     printf("Head %s<=>%s", KRED, KNRM);
-    
+
     while (node != list->tail) {
 
         printf(" %d %s<=>%s", node->value.integer, KRED, KNRM);
@@ -166,7 +170,6 @@ void print_list(struct linked_list* list) {
  */
 
 void free_linked_list(struct linked_list* list) {
-    struct linked_list_node* old_node = NULL;
     struct linked_list_node* node = list->head->next;
 
     while (node != list->tail) {

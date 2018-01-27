@@ -9,23 +9,30 @@ void run_tests() {
     linked_list_tests();
     hash_table_tests();
     printf("\n\n%sPassed All Tests %s\n\n\n", KGRN, KNRM);
-    
+
 }
 
 void hash_table_tests() {
     int i;
     int keyword_start_const = 300;
-    union val value;
+    struct val value;
     struct symbol_tab_entry* sym_tab_ent;
 
     bool is_found = false;
+
+    printf("\n\n%sHT Test 0%s\n", KBLU, KNRM);
+    symbol_table_init();
+
+    print_symbol_table(token_val_to_str_lookup);
+    print_symbol_table(symbol_table);
+
 
     printf("\n\n%sHT Test 1%s\n", KBLU, KNRM);
 
     //Insert Keywords
     for (i = 0; i < KEYWORD_COUNT; i++) {
         is_found = false;
-        value = get_value(symbol_table, keywords[i], &is_found);
+        value = get_value(symbol_table, keywords[i].str, &is_found);
 
         if (!is_found)
             error(1, 1, "Hash Table Failed Test 1");
@@ -44,7 +51,10 @@ void hash_table_tests() {
 
 
 
-    print_symbol_table(symbol_table);
+    free_symbol_table(token_val_to_str_lookup);
+    free_symbol_table(symbol_table);
+
+
 
 }
 
@@ -55,7 +65,7 @@ void hash_table_tests() {
 void linked_list_tests() {
     int max = 12;
     int index = 0;
-    union val value;
+    struct val value;
     struct linked_list_node* node;
 
     //Linked List

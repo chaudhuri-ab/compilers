@@ -13,7 +13,7 @@ struct hash_table{
 struct hash_entry{
     size_t hashed_key; /*String Hashed Value*/
     char* key_string; /* Needs Freeing As Allocated on Heap*/
-    union val data; /*Child Needs to Free Ptr*/
+    struct val data; /*Child Needs to Free Ptr*/
 };
 
 

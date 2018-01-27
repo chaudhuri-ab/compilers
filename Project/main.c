@@ -1,9 +1,8 @@
 #include "global.h"
 
 int main(int args, char* argc[]) {
-
+    run_tests();
     init(args, argc);
-    //run_tests();
 
     parse();
 

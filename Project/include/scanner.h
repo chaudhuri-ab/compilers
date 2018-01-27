@@ -1,15 +1,27 @@
 #ifndef scanner
 #define scanner
 
-extern char* keywords[];
+struct token{
+    char* str;
+    int val;
+};
+
+
+
+
+
 #define KEYWORD_COUNT 32
+extern struct token keywords[KEYWORD_COUNT];
+
+
 
 extern FILE* curr_fp; /* current file pointer scanner is using */
 
 extern int token_value;
 
+
 /* Token Constants - KEYWORDS */
-#define END_OF_FILE 29933
+#define END_OF_FILE 299
 #define AUTO 300
 #define DOUBLE 301
 #define INT 302

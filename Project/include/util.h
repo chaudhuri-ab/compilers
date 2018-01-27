@@ -2,7 +2,7 @@
 #ifndef UTIL_H
 #define UTIL_H
 
-union val{
+struct val{
 	char character;
 	unsigned char u_character;
 	int integer;
@@ -11,6 +11,7 @@ union val{
 	unsigned long u_long_int;
 	float float_val;
 	double double_val;
+        char* static_string;
 	void* pointer; //Child Has To Free This
 };
 

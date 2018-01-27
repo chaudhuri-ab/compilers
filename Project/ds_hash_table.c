@@ -67,7 +67,7 @@ size_t insert_entry(struct hash_table* hash_tab, struct hash_entry* entry) {
     struct linked_list_node* node = get_hash_entry_node(hash_tab, entry->key_string);
 
     if (node == NULL) {
-        union val value;
+        struct val value;
         value.pointer = entry;
         struct linked_list_node* node = create_linked_list_node(value);
 
@@ -128,14 +128,14 @@ struct linked_list_node* get_hash_entry_node(struct hash_table* hash_tab, char* 
  * @param is_found pointer to boolean indicating whether key was found
  * @return value (data of entry) 
  */
-union val get_value(struct hash_table* hash_tab, char* key, bool* is_found) {
+struct val get_value(struct hash_table* hash_tab, char* key, bool* is_found) {
     struct linked_list_node* node = get_hash_entry_node(hash_tab, key);
     if (node == NULL) {
-        union val value;
+        struct val value;
         value.pointer = NULL;
-        *is_found = false; 
+        *is_found = false;
         return value;
-    } else{
+    } else {
         *is_found = true;
         return (((struct hash_entry*) node->value.pointer)->data);
     }
@@ -149,7 +149,7 @@ union val get_value(struct hash_table* hash_tab, char* key, bool* is_found) {
  * @param data data value to be inserted
  * @return index entry is inserted
  */
-size_t insert_value(struct hash_table* hash_tab, char* key, union val data) {
+size_t insert_value(struct hash_table* hash_tab, char* key, struct val data) {
     struct hash_entry* entry = calloc(1, sizeof (struct hash_entry));
     entry->data = data;
     entry->hashed_key = string_hash(key);
@@ -181,6 +181,12 @@ void print_hash_table(struct hash_table* hash_tab) {
  */
 void free_hash_entry(struct hash_entry* entry) {
     free(entry->key_string);
+    entry->key_string = NULL;
+
+    if (entry->data.pointer != NULL) {
+        free(entry->data.pointer);
+        entry->data.pointer = NULL;
+    }
     free(entry);
 }
 
@@ -202,6 +208,8 @@ void free_hash_table(struct hash_table* hash_tab) {
         while (node != list->tail) {
             entry = (struct hash_entry*) node->value.pointer;
             free_hash_entry(entry);
+            node->value.pointer = NULL;
+
             node = node->next;
         }
 

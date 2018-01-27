@@ -4,10 +4,9 @@ FILE* curr_fp;
 
 
 //Keep in sych with token constant values in scanner.h to ensure accuracy of initialization
-char* keywords[] = {"auto", "double", "int", "struct", "const", "float", "short",
-    "unsigned", "break", "else", "long", "switch", "continue", "for", "signed", "void",
-    "case", "enum", "register", "typedef", "default", "goto", "sizeof", "volatile", "char",
-    "extern", "return", "union", "do", "if", "static", "while"};
+struct token keywords[KEYWORD_COUNT] = {{"auto", AUTO}, {"double", DOUBLE} , {"int", INT}, {"struct", STRUCT}, {"const", CONST}, {"float", FLOAT}, {"short", SHORT},
+{"unsigned", UNSIGNED}, {"break", BREAK}, {"else", ELSE}, {"long", LONG}, {"switch", SWITCH}, {"continue", CONTINUE}, {"for", FOR}, {"signed", SIGNED}, {"void", VOID},
+{"case", CASE}, {"enum", ENUM}, {"register", REGISTER}, {"typedef", TYPEDEF}, {"default", DEFAULT}, {"goto", GOTO}, {"sizeof", SIZEOF}, {"volatile", VOLATILE}, {"char", CHAR}, {"extern", EXTERN}, {"return", RETURN}, {"union", UNION}, {"do", DO}, {"if", IF}, {"static", STATIC}, {"while", WHILE}};
 
 
 
