@@ -22,6 +22,7 @@ void init(int args, char* argc[]) {
 
 
     symbol_table_init();
-
+    
+    scanner_current_state = 0;
 
 }

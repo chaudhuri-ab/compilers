@@ -7,6 +7,11 @@ struct token{
 };
 
 
+struct state {
+    int next_state;
+    void* transition_fcn;
+};
+
 
 
 
@@ -17,8 +22,9 @@ extern struct token keywords[KEYWORD_COUNT];
 
 extern FILE* curr_fp; /* current file pointer scanner is using */
 
-extern int token_value;
-
+extern struct val token_value; /* Used By Parser To Get Token Value */
+extern int scanner_current_state; 
+extern struct state scanner_state_machine[10][93];
 
 /* Token Constants - KEYWORDS */
 #define END_OF_FILE 299

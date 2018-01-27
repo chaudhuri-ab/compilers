@@ -1,6 +1,8 @@
 #include "global.h"
 
 FILE* curr_fp;
+struct val token_value; /* Used By Parser To Get Token Value */
+int scanner_current_state; 
 
 
 //Keep in sych with token constant values in scanner.h to ensure accuracy of initialization
@@ -13,8 +15,9 @@ struct token keywords[KEYWORD_COUNT] = {{"auto", AUTO}, {"double", DOUBLE} , {"i
 int next_token(){
     int c;
     while( (c = getc(curr_fp)) != EOF){
-        printf("%c", c);
+        printf("%s%c%s", KCYN, c, KNRM);
     }
     
-    return EOF;
+    
+    return END_OF_FILE;
 }

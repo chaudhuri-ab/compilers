@@ -1,17 +1,4 @@
-
-
-#include <stdio.h>
-#include <stdlib.h>
-
-int min_printable = 33; //!
-int max_printable = 126; //~
-
-int num_states = 10;
-
-struct state {
-    int next_state;
-    void* transition_fcn;
-};
+#include "global.h"
 
 
 struct state state_machine[10][94] = 
@@ -37,33 +24,3 @@ struct state state_machine[10][94] =
 ,{  {/* ! */0, NULL}, {/* " */0, NULL}, {/* # */0, NULL}, {/* $ */0, NULL}, {/* % */0, NULL}, {/* & */0, NULL}, {/* ' */0, NULL}, {/* ( */0, NULL}, {/* ) */0, NULL}, {/* * */0, NULL}, {/* + */0, NULL}, {/* , */0, NULL}, {/* - */0, NULL}, {/* . */0, NULL}, {/* / */0, NULL}, {/* 0 */0, NULL}, {/* 1 */0, NULL}, {/* 2 */0, NULL}, {/* 3 */0, NULL}, {/* 4 */0, NULL}, {/* 5 */0, NULL}, {/* 6 */0, NULL}, {/* 7 */0, NULL}, {/* 8 */0, NULL}, {/* 9 */0, NULL}, {/* : */0, NULL}, {/* ; */0, NULL}, {/* < */0, NULL}, {/* = */0, NULL}, {/* > */0, NULL}, {/* ? */0, NULL}, {/* @ */0, NULL}, {/* A */0, NULL}, {/* B */0, NULL}, {/* C */0, NULL}, {/* D */0, NULL}, {/* E */0, NULL}, {/* F */0, NULL}, {/* G */0, NULL}, {/* H */0, NULL}, {/* I */0, NULL}, {/* J */0, NULL}, {/* K */0, NULL}, {/* L */0, NULL}, {/* M */0, NULL}, {/* N */0, NULL}, {/* O */0, NULL}, {/* P */0, NULL}, {/* Q */0, NULL}, {/* R */0, NULL}, {/* S */0, NULL}, {/* T */0, NULL}, {/* U */0, NULL}, {/* V */0, NULL}, {/* W */0, NULL}, {/* X */0, NULL}, {/* Y */0, NULL}, {/* Z */0, NULL}, {/* [ */0, NULL}, {/* \ */0, NULL}, {/* ] */0, NULL}, {/* ^ */0, NULL}, {/* _ */0, NULL}, {/* ` */0, NULL}, {/* a */0, NULL}, {/* b */0, NULL}, {/* c */0, NULL}, {/* d */0, NULL}, {/* e */0, NULL}, {/* f */0, NULL}, {/* g */0, NULL}, {/* h */0, NULL}, {/* i */0, NULL}, {/* j */0, NULL}, {/* k */0, NULL}, {/* l */0, NULL}, {/* m */0, NULL}, {/* n */0, NULL}, {/* o */0, NULL}, {/* p */0, NULL}, {/* q */0, NULL}, {/* r */0, NULL}, {/* s */0, NULL}, {/* t */0, NULL}, {/* u */0, NULL}, {/* v */0, NULL}, {/* w */0, NULL}, {/* x */0, NULL}, {/* y */0, NULL}, {/* z */0, NULL}, {/* { */0, NULL}, {/* | */0, NULL}, {/* } */0, NULL}}
 
 };
-
-/*
- * 
- */
-int main(int argc, char** argv) {
-    int i, j;
-    printf("hello World%d\n\n", state_machine[0][0].next_state);
-
-    printf("{\n");
-
-    for (i = 0; i < num_states; i++) {
-        if (i != 0)
-            printf(",");
-        printf("{ ");
-        for (j = 0; j < max_printable - min_printable; j++) {
-            if (j != 0)
-                printf(",");
-
-            printf(" {/* %c */%d, NULL}", min_printable + j, 0);
-            
-        }
-        printf("}\n\n");
-
-    }
-
-    printf("}\n");
-
-    return (EXIT_SUCCESS);
-}
-
