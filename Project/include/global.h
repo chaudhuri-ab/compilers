@@ -14,6 +14,7 @@
 #include "test.h"
 #include "symbol_tab.h"
 #include "scanner.h"
+#include "parser.h"
 #include "prototypes.h"
 
 

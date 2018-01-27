@@ -9,7 +9,7 @@ void run_tests() {
     linked_list_tests();
     hash_table_tests();
     printf("\n\n%sPassed All Tests %s\n\n\n", KGRN, KNRM);
-
+    
 }
 
 void hash_table_tests() {
