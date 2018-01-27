@@ -1,16 +1,6 @@
 #ifndef prototypes
 #define prototypes
 
-#include "ds_linked_list.h"
-
-
-/* symbol_tab.c */
-void print_symbol_table(struct hash_table* symbol_table);
-void print_symbol_tab_list (struct linked_list* list);
-void free_symbol_table(struct hash_table* symbol_table);
-void free_symbol_tab_list(struct linked_list* list);
-void symbol_table_init();
-
 
 /* ds_hash_table */
 struct hash_table* create_hash_table(size_t size);
@@ -34,8 +24,23 @@ struct linked_list_node* pop(struct linked_list* list);
 void print_list(struct linked_list* list);
 void free_linked_list(struct linked_list* list);
 
-/* prototypes.h */
-void init();
+/* main.c */
+void init(int args, char* argc[]);
+
+/* parser.c */
+void parse();
+
+
+/* scanner.c */
+int next_token();
+
+/* symbol_tab.c */
+void print_symbol_table(struct hash_table* symbol_table);
+void print_symbol_tab_list (struct linked_list* list);
+void free_symbol_table(struct hash_table* symbol_table);
+void free_symbol_tab_list(struct linked_list* list);
+void symbol_table_init();
+
 
 /*test.c*/
 void run_tests();

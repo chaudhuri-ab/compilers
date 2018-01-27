@@ -4,8 +4,12 @@
 extern char* keywords[];
 #define KEYWORD_COUNT 32
 
+extern FILE* curr_fp; /* current file pointer scanner is using */
+
+extern int token_value;
 
 /* Token Constants - KEYWORDS */
+#define END_OF_FILE 29933
 #define AUTO 300
 #define DOUBLE 301
 #define INT 302
