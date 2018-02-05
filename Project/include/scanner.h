@@ -10,21 +10,25 @@ struct token{
 struct state {
     int next_state;
     void* transition_fcn;
+    int token_val; /*token constant found in scanner.h*/
 };
 
+#define SCANNER_INPUT_BUFFER 1024
 
+
+//
+extern FILE* curr_fp; /* current file pointer scanner is using */
+
+extern struct val token_value; /* Used By Parser To Get Token Value */
+extern int scanner_current_state; 
+extern struct state scanner_state_machine[10][94];
+
+//
 
 
 #define KEYWORD_COUNT 32
 extern struct token keywords[KEYWORD_COUNT];
 
-
-
-extern FILE* curr_fp; /* current file pointer scanner is using */
-
-extern struct val token_value; /* Used By Parser To Get Token Value */
-extern int scanner_current_state; 
-extern struct state scanner_state_machine[10][93];
 
 /* Token Constants - KEYWORDS */
 #define END_OF_FILE 299
@@ -61,7 +65,63 @@ extern struct state scanner_state_machine[10][93];
 #define STATIC 330
 #define WHILE 331
 
+//
 
-//Add As Needed
 
+//Op Tokens
+#define ELLIPSIS 332 /* ... */
+#define RIGHT_ASSIGN 333 /* >>= */
+#define LEFT_ASSIGN 334 /* <<= */
+#define ADD_ASSIGN 335 /* += */
+#define SUB_ASSIGN 336 /* -= */
+#define MUL_ASSIGN 337 /* *= */
+#define DIV_ASSIGN 338 /* /= */
+#define MOD_ASSIGN 339 /* %= */
+#define AND_ASSIGN 340 /* &= */
+#define XOR_ASSIGN 341 /* ^= */
+#define OR_ASSIGN 342 /* |= */
+#define RIGHT_OP 343 /* >> */
+#define LEFT_OP 344 /* << */
+#define INC_OP 345 /* ++ */
+#define DEC_OP 346 /* -- */
+#define PTR_OP 347 /* -> */
+#define AND_OP 348 /* && */
+#define OR_OP 349 /* || */
+#define LE_OP 350 /* <= */
+#define GE_OP 351 /* >= */
+#define EQ_OP 352 /* == */
+#define NEQ_OP 353 /* != */
+
+
+#define BAD_TOKEN 354
+//Direct Return Tokens
+/* 
+";"			{ count(); return(';'); }
+("{"|"<%")		{ count(); return('{'); }
+("}"|"%>")		{ count(); return('}'); }
+","			{ count(); return(','); }
+":"			{ count(); return(':'); }
+"="			{ count(); return('='); }
+"("			{ count(); return('('); }
+")"			{ count(); return(')'); }
+("["|"<:")		{ count(); return('['); }
+("]"|":>")		{ count(); return(']'); }
+"."			{ count(); return('.'); }
+"&"			{ count(); return('&'); }
+"!"			{ count(); return('!'); }
+"~"			{ count(); return('~'); }
+"-"			{ count(); return('-'); }
+"+"			{ count(); return('+'); }
+"*"			{ count(); return('*'); }
+"/"			{ count(); return('/'); }
+"%"			{ count(); return('%'); }
+"<"			{ count(); return('<'); }
+">"			{ count(); return('>'); }
+"^"			{ count(); return('^'); }
+"|"			{ count(); return('|'); }
+"?"			{ count(); return('?'); }
+
+[ \t\v\n\f]		{ count(); } //Ignore spaces
+ 
+ */
 #endif

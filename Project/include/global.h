@@ -18,7 +18,12 @@
 #include "prototypes.h"
 
 
+//Debug Flags
+#define VERBOSE_SCANNER
+#define SCANNER_PROCESS_BAD_TOKEN
 
+
+//
 
 
 //errno value       Error

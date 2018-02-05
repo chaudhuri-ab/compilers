@@ -1,5 +1,9 @@
 #include "global.h"
 
 void parse(){
-    next_token();
+    int val;
+    while((val = next_token()) != EOF){
+        printf("Token Found - %d\n", val);
+        
+    }
 }
