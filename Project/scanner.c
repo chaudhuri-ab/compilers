@@ -47,11 +47,8 @@ struct token keywords[KEYWORD_COUNT] = {
 };
 
 int next_token() {
-    scanner_current_state = 0; //Init to FSM to S0
-    token_found_flag = false;
-    scanner_input_buffer_index = 0;
-    token_const = BAD_TOKEN;
-    beginning_of_token_found = false;
+    reset_scanner();
+
     struct state next_state;
     void (*fcn_ptr)(int);
     void (*fcn_ptr2)();
@@ -172,12 +169,7 @@ void collect_inline_comment() {
     if (c == EOF) {
         token_const = EOF;
     } else {
-        scanner_current_state = 0; //Init to FSM to S0
-        token_found_flag = false;
-        scanner_input_buffer_index = 0;
-        token_const = BAD_TOKEN;
-        beginning_of_token_found = false;
-
+        reset_scanner();
     }
 }
 
@@ -197,11 +189,7 @@ void collect_multiline_comment() {
     if (c == EOF) {
         token_const = EOF;
     } else {
-        scanner_current_state = 0; //Init to FSM to S0
-        token_found_flag = false;
-        scanner_input_buffer_index = 0;
-        token_const = BAD_TOKEN;
-        beginning_of_token_found = false;
+        reset_scanner();
     }
 }
 
@@ -223,4 +211,15 @@ int peek() {
     c = getc(curr_fp);
     ungetc(c, curr_fp);
     return c;
+}
+
+/**
+ * Reset the scanner
+ */
+void reset_scanner() {
+    scanner_current_state = 0; //Init to FSM to S0
+    token_found_flag = false;
+    scanner_input_buffer_index = 0;
+    token_const = BAD_TOKEN;
+    beginning_of_token_found = false;
 }

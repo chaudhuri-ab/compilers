@@ -1,5 +1,14 @@
 #include "global.h"
 
+/*
+ TODO
+ * String Literal
+ * Constant Whole Number
+ * Constant Decimal
+ * Constant Hex
+ * Multi Char Tokens
+
+ */
 
 struct state scanner_state_machine[10][94] =
 {

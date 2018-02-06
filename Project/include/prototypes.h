@@ -40,6 +40,7 @@ int peek();
 void collect_id();
 void collect_inline_comment();
 void collect_multiline_comment();
+void reset_scanner();
 
 /* symbol_tab.c */
 void print_symbol_table(struct hash_table* symbol_table);
