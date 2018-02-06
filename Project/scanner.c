@@ -59,11 +59,10 @@ int next_token() {
     }
 
     while ((c = getc(curr_fp)) != EOF && !token_found_flag) {
-        if (beginning_of_token_found && (c == '\n' || c == ' ' || c == '\t')) {
-
+        if (token_const != STRING_LITERAL && beginning_of_token_found && (c == '\n' || c == ' ' || c == '\t')) {
             break; //end of token
 
-        } else if (!beginning_of_token_found && (c == '\n' || c == ' ' || c == '\t')) {
+        } else if ((!beginning_of_token_found && (c == '\n' || c == ' ' || c == '\t')) || (token_const == STRING_LITERAL) && (c == '\n' || c == ' ' || c == '\t')) {
             continue; //consume input
         } else {
             beginning_of_token_found = true;
@@ -76,6 +75,7 @@ int next_token() {
         scanner_current_state = next_state.next_state; //Transition to next state
 
 #ifdef VERBOSE_SCANNER
+        //printf("| State = %d |", scanner_current_state);
         printf("%s%c%s", KCYN, c, KNRM);
 #endif
 
@@ -105,9 +105,9 @@ int next_token() {
 
 
 
-    if (c == EOF || token_const == EOF)
+    if (c == EOF || token_const == EOF) {
         return EOF;
-    else if (token_const == BAD_TOKEN) {
+    } else if (token_const == BAD_TOKEN) {
 #ifndef SCANNER_PROCESS_BAD_TOKEN
         scanner_error();
 #endif
@@ -125,6 +125,10 @@ int next_token() {
             token_value.pointer = strdup(scanner_input_buffer);
         }
         return token_const;
+    } else if (token_const == STRING_LITERAL) {
+        token_value.pointer = strdup(scanner_input_buffer);
+        return token_const;
+
     } else
         return token_const;
 }
@@ -146,6 +150,12 @@ void id_found_return() {
     scanner_input_buffer[scanner_input_buffer_index - 1] = '\0';
 }
 
+void string_lit_found_return() {
+    //ungetc(scanner_input_buffer[scanner_input_buffer_index - 1], curr_fp);
+    token_found_flag = true;
+    scanner_input_buffer[scanner_input_buffer_index - 1] = '\0';
+}
+
 /**
  * Called to collect characters of an ID
  * @param num Not Used
@@ -153,6 +163,11 @@ void id_found_return() {
 void collect_id() {
     //printf("\nCollect\n");
     token_const = ID;
+}
+
+void collect_string_lit() {
+    token_const = STRING_LITERAL;
+    scanner_input_buffer_index--; //ignore the "
 }
 
 /**
@@ -198,7 +213,7 @@ void collect_multiline_comment() {
  */
 void scanner_error() {
     scanner_input_buffer[scanner_input_buffer_index] = '\0';
-    error(1, 5, "Scanner - Invalid Token - %s \n", scanner_input_buffer);
+    error(1, 5, "Scanner (State %d) - Invalid Token - %s \n", scanner_current_state, scanner_input_buffer);
 
 }
 

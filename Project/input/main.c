@@ -9,7 +9,7 @@
 
 int main(int argc, char** argv) {
     int c = 012;
-    printf("Octal in Decimal = %d\n", c);
+    printf("Octal in Decimal = %d\n\n", c);
     int d = 0xF;
     printf("Hex in Dec %d\n", d);
     int a = 10;

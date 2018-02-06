@@ -41,6 +41,8 @@ void collect_id();
 void collect_inline_comment();
 void collect_multiline_comment();
 void reset_scanner();
+void collect_string_lit();
+void string_lit_found_return();
 
 /* symbol_tab.c */
 void print_symbol_table(struct hash_table* symbol_table);

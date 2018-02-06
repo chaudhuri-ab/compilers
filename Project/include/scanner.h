@@ -93,8 +93,12 @@ extern struct token keywords[KEYWORD_COUNT];
 #define NEQ_OP 353 /* != */
 
 
-#define BAD_TOKEN 354
+#define STRING_LITERAL 354
 #define ID 355
+
+
+#define BAD_TOKEN 9999
+
 //Direct Return Tokens
 /* 
 ";"			{ count(); return(';'); }

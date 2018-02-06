@@ -4,7 +4,7 @@ void parse() {
     int val;
     while ((val = next_token()) != EOF) {
         printf(" Token Found - %d", val);
-        if (val == ID) {
+        if (val == ID || val == STRING_LITERAL) {
             printf(" Val = %s", (char*) token_value.pointer);
             free(token_value.pointer);
             token_value.pointer = NULL;
