@@ -19,7 +19,7 @@
 
 
 //Debug Flags
-//#define VERBOSE_SCANNER
+#define VERBOSE_SCANNER
 #define SCANNER_PROCESS_BAD_TOKEN /*Process Bad Tokens */
 
 

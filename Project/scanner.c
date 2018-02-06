@@ -124,6 +124,8 @@ int next_token() {
         if (isfound) {
             struct symbol_tab_entry* sym_tab_entry = (struct symbol_tab_entry*) value.pointer;
             token_const = sym_tab_entry->value.integer;
+        } else {
+            token_value.pointer = strdup(scanner_input_buffer);
         }
         return token_const;
     } else
@@ -145,7 +147,6 @@ void id_found_return() {
     ungetc(scanner_input_buffer[scanner_input_buffer_index - 1], curr_fp);
     token_found_flag = true;
     scanner_input_buffer[scanner_input_buffer_index - 1] = '\0';
-    token_value.pointer = strdup(scanner_input_buffer);
 }
 
 /**
