@@ -77,6 +77,12 @@ int next_token() {
 
         next_state = scanner_state_machine[scanner_current_state][c - '!'];
         scanner_current_state = next_state.next_state; //Transition to next state
+
+#ifdef VERBOSE_SCANNER
+        printf("%s%c%s", KCYN, c, KNRM);
+#endif
+
+
         //Call Transition Function if not null
         if (next_state.transition_fcn != NULL && next_state.token_val != 0) {
 #ifdef VERBOSE_SCANNER
@@ -94,9 +100,7 @@ int next_token() {
         }
 
         //  
-#ifdef VERBOSE_SCANNER
-        printf("%s%c%s", KCYN, c, KNRM);
-#endif
+
         if (token_found_flag)
             break;
 
@@ -104,7 +108,7 @@ int next_token() {
 
 
 
-    if (c == EOF)
+    if (c == EOF || token_const == EOF)
         return EOF;
     else if (token_const == BAD_TOKEN) {
 #ifndef SCANNER_PROCESS_BAD_TOKEN
@@ -151,6 +155,53 @@ void id_found_return() {
 void collect_id() {
     //printf("\nCollect\n");
     token_const = ID;
+}
+
+/**
+ * Called to collect characters of an inline comment
+ */
+void collect_inline_comment() {
+    int c;
+    while ((c = getc(curr_fp)) != EOF && c != '\n') {
+        //consume comments
+#ifdef VERBOSE_SCANNER
+        printf(" %sChar = %c%s\n ", KGRN, c, KNRM);
+#endif
+    }
+    if (c == EOF) {
+        token_const = EOF;
+    } else {
+        scanner_current_state = 0; //Init to FSM to S0
+        token_found_flag = false;
+        scanner_input_buffer_index = 0;
+        token_const = BAD_TOKEN;
+        beginning_of_token_found = false;
+
+    }
+}
+
+void collect_multiline_comment() {
+    int c;
+    while ((c = getc(curr_fp)) != EOF) {
+        if (c == '*') {
+            if (peek() == '/') {
+                getc(curr_fp); //consume char
+                break;
+            }
+        }
+#ifdef VERBOSE_SCANNER
+        printf(" %sChar = %c%s\n ", KRED, c, KNRM);
+#endif
+    }
+    if (c == EOF) {
+        token_const = EOF;
+    } else {
+        scanner_current_state = 0; //Init to FSM to S0
+        token_found_flag = false;
+        scanner_input_buffer_index = 0;
+        token_const = BAD_TOKEN;
+        beginning_of_token_found = false;
+    }
 }
 
 /**

@@ -18,7 +18,7 @@ struct state scanner_state_machine[10][94] =
         {/* , */0, &token_found_direct_return, 0},
         {/* - */0, &token_found_direct_return, 0},
         {/* . */0, &token_found_direct_return, 0},
-        {/* / */0, &token_found_direct_return, 0},
+        {/* / */2, NULL, 0},
         {/* 0 */0, NULL, 0},
         {/* 1 */0, NULL, 0},
         {/* 2 */0, NULL, 0},
@@ -99,7 +99,6 @@ struct state scanner_state_machine[10][94] =
         {/* } */0, &token_found_direct_return, 0},
         {/* ~ */0, &token_found_direct_return, 0}
     }
-
     ,
     { /* Index 1 - ID */
         {/* ! */0, &id_found_return, 0},
@@ -199,7 +198,7 @@ struct state scanner_state_machine[10][94] =
     }
 
     ,
-    { /* Index 2 */
+    { /* Index 2 - First / */
         {/* ! */0, NULL, 0},
         {/* " */0, NULL, 0},
         {/* # */0, NULL, 0},
@@ -209,12 +208,12 @@ struct state scanner_state_machine[10][94] =
         {/* ' */0, NULL, 0},
         {/* ( */0, NULL, 0},
         {/* ) */0, NULL, 0},
-        {/* * */0, NULL, 0},
+        {/* * */0, &collect_multiline_comment, 0},
         {/* + */0, NULL, 0},
         {/* , */0, NULL, 0},
         {/* - */0, NULL, 0},
         {/* . */0, NULL, 0},
-        {/* / */0, NULL, 0},
+        {/* / */0, &collect_inline_comment, 0},
         {/* 0 */0, NULL, 0},
         {/* 1 */0, NULL, 0},
         {/* 2 */0, NULL, 0},
@@ -297,7 +296,7 @@ struct state scanner_state_machine[10][94] =
     }
 
     ,
-    { /* Index 3 */
+    { /* Index 3 - Beginning of inline comment */
         {/* ! */0, NULL, 0},
         {/* " */0, NULL, 0},
         {/* # */0, NULL, 0},

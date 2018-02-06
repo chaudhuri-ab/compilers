@@ -38,6 +38,8 @@ void token_found_direct_return();
 void scanner_error();
 int peek();
 void collect_id();
+void collect_inline_comment();
+void collect_multiline_comment();
 
 /* symbol_tab.c */
 void print_symbol_table(struct hash_table* symbol_table);
