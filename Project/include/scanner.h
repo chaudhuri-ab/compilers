@@ -9,7 +9,7 @@ struct token{
 
 struct state {
     int next_state;
-    void* transition_fcn;
+    void *transition_fcn;
     int token_val; /*token constant found in scanner.h*/
 };
 
@@ -68,7 +68,7 @@ extern struct token keywords[KEYWORD_COUNT];
 //
 
 
-//Op Tokens
+//Double and Triple Op Tokens
 #define ELLIPSIS 332 /* ... */
 #define RIGHT_ASSIGN 333 /* >>= */
 #define LEFT_ASSIGN 334 /* <<= */
@@ -94,6 +94,7 @@ extern struct token keywords[KEYWORD_COUNT];
 
 
 #define BAD_TOKEN 354
+#define ID 355
 //Direct Return Tokens
 /* 
 ";"			{ count(); return(';'); }

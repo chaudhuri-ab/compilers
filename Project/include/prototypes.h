@@ -33,10 +33,11 @@ void parse();
 
 /* scanner.c */
 int next_token();
-void token_found_return(int);
+void id_found_return();
 void token_found_direct_return();
 void scanner_error();
-
+int peek();
+void collect_id();
 
 /* symbol_tab.c */
 void print_symbol_table(struct hash_table* symbol_table);
