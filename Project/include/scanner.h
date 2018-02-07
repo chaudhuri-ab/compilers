@@ -21,7 +21,7 @@ extern FILE* curr_fp; /* current file pointer scanner is using */
 
 extern struct val token_value; /* Used By Parser To Get Token Value */
 extern int scanner_current_state; 
-#define NUM_STATES 12
+#define NUM_STATES 13
 #define NUM_ALPHABET 94
 extern struct state scanner_state_machine[NUM_STATES][NUM_ALPHABET];
 
@@ -102,6 +102,7 @@ extern struct token keywords[KEYWORD_COUNT];
 
 
 #define BAD_TOKEN 9999
+#define PREPROCESSOR_FLAG 10000 /*Flag To Indicate Preprocessor*/
 
 //Direct Return Tokens
 /* 

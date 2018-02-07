@@ -134,6 +134,17 @@ int next_token() {
         }
         return token_const;
 
+    } else if (token_const == PREPROCESSOR_FLAG) {
+        bool isfound = false;
+        struct val value = get_value(symbol_table, scanner_input_buffer, &isfound);
+        //printf("Searching For - %s, Found = %d\n", scanner_input_buffer, isfound);
+        if (isfound) {
+            struct symbol_tab_entry* sym_tab_entry = (struct symbol_tab_entry*) value.pointer;
+            token_const = sym_tab_entry->value.integer;
+        } else {
+            scanner_error();
+        }
+        return token_const;
     } else if (token_const == STRING_LITERAL) {
         token_value.pointer = strdup(scanner_input_buffer);
         return token_const;
@@ -191,6 +202,7 @@ void token_found_direct_return_w_val(int token_val) {
     token_const = token_val;
     token_found_flag = true;
 }
+
 /**
  * Called to collect characters of an ID
  * @param num Not Used
@@ -198,6 +210,10 @@ void token_found_direct_return_w_val(int token_val) {
 void collect_id() {
     //printf("\nCollect\n");
     token_const = ID;
+}
+
+void collect_preprocessor() {
+    token_const = PREPROCESSOR_FLAG;
 }
 
 void collect_string_lit() {
@@ -209,7 +225,7 @@ void collect_constant() {
     token_const = CONSTANT;
 }
 
-void collect_token(int token){
+void collect_token(int token) {
     token_const = token;
 }
 
