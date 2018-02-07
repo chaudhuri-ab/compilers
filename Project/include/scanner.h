@@ -21,7 +21,7 @@ extern FILE* curr_fp; /* current file pointer scanner is using */
 
 extern struct val token_value; /* Used By Parser To Get Token Value */
 extern int scanner_current_state; 
-extern struct state scanner_state_machine[10][94];
+extern struct state scanner_state_machine[11][94];
 
 //
 
@@ -95,6 +95,7 @@ extern struct token keywords[KEYWORD_COUNT];
 
 #define STRING_LITERAL 354
 #define ID 355
+#define CONSTANT 356
 
 
 #define BAD_TOKEN 9999

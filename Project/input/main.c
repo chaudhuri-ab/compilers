@@ -7,10 +7,19 @@
  */
 //int myadd_fcn(int a, int b);
 
+struct test{
+    int val;
+    int val2;
+};
+
 int main(int argc, char** argv) {
+    struct test t1;
+    t1.val = 100;
+    float e = 0.2;
+    float f = .4;
     int c = 012;
     printf("Octal in Decimal = %d\n\n", c);
-    int d = 0xF;
+    int d = 0xFC;
     printf("Hex in Dec %d\n", d);
     int a = 10;
     int b = 20;

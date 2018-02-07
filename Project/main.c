@@ -1,9 +1,5 @@
 #include "global.h"
 
-
-
-
-
 int main(int args, char* argc[]) {
     //run_tests();
     init(args, argc);
@@ -28,5 +24,5 @@ void init(int args, char* argc[]) {
     symbol_table_init();
     
     scanner_current_state = 0;
-
+    token_value.pointer = NULL;
 }

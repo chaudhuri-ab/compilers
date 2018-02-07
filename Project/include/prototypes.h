@@ -19,7 +19,7 @@ struct linked_list_node* create_linked_list_node(struct val value);
 struct linked_list* create_linked_list();
 void queue(struct linked_list* list, struct linked_list_node* node);
 struct linked_list_node* dequeue(struct linked_list* list);
-void push (struct linked_list* list, struct linked_list_node* node);
+void push(struct linked_list* list, struct linked_list_node* node);
 struct linked_list_node* pop(struct linked_list* list);
 void print_list(struct linked_list* list);
 void free_linked_list(struct linked_list* list);
@@ -43,10 +43,13 @@ void collect_multiline_comment();
 void reset_scanner();
 void collect_string_lit();
 void string_lit_found_return();
+void collect_constant();
+void constant_found_return();
+void token_found_unget_return(int token_val);
 
 /* symbol_tab.c */
 void print_symbol_table(struct hash_table* symbol_table);
-void print_symbol_tab_list (struct linked_list* list);
+void print_symbol_tab_list(struct linked_list* list);
 void free_symbol_table(struct hash_table* symbol_table);
 void free_symbol_tab_list(struct linked_list* list);
 void symbol_table_init();

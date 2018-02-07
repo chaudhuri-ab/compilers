@@ -46,6 +46,10 @@ struct token keywords[KEYWORD_COUNT] = {
     {"while", WHILE}
 };
 
+/**
+ * Get next token
+ * @return return int of token found
+ */
 int next_token() {
     reset_scanner();
 
@@ -55,15 +59,18 @@ int next_token() {
     int c;
 
     if (token_value.pointer != NULL) {
-        //free(token_value.pointer);
+        free(token_value.pointer);
     }
 
     while ((c = getc(curr_fp)) != EOF && !token_found_flag) {
         if (token_const != STRING_LITERAL && beginning_of_token_found && (c == '\n' || c == ' ' || c == '\t')) {
             break; //end of token
 
-        } else if ((!beginning_of_token_found && (c == '\n' || c == ' ' || c == '\t')) || (token_const == STRING_LITERAL) && (c == '\n' || c == ' ' || c == '\t')) {
+        } else if (token_const != STRING_LITERAL && (!beginning_of_token_found && (c == '\n' || c == ' ' || c == '\t'))) {
             continue; //consume input
+        } else if ((token_const == STRING_LITERAL) && (c == '\n' || c == ' ' || c == '\t')) {
+            scanner_input_buffer[scanner_input_buffer_index++] = c;
+            continue;
         } else {
             beginning_of_token_found = true;
         }
@@ -104,7 +111,7 @@ int next_token() {
     }
 
 
-
+    //Return Token
     if (c == EOF || token_const == EOF) {
         return EOF;
     } else if (token_const == BAD_TOKEN) {
@@ -125,7 +132,12 @@ int next_token() {
             token_value.pointer = strdup(scanner_input_buffer);
         }
         return token_const;
+
     } else if (token_const == STRING_LITERAL) {
+        token_value.pointer = strdup(scanner_input_buffer);
+        return token_const;
+
+    } else if (token_const == CONSTANT) {
         token_value.pointer = strdup(scanner_input_buffer);
         return token_const;
 
@@ -156,6 +168,21 @@ void string_lit_found_return() {
     scanner_input_buffer[scanner_input_buffer_index - 1] = '\0';
 }
 
+void constant_found_return() {
+    ungetc(scanner_input_buffer[scanner_input_buffer_index - 1], curr_fp);
+    token_found_flag = true;
+    scanner_input_buffer[scanner_input_buffer_index - 1] = '\0';
+}
+
+/**
+ * Token Found Push Back Last Char and Return Token
+ */
+void token_found_unget_return(int token_val) {
+    token_const = token_val;
+    ungetc(scanner_input_buffer[scanner_input_buffer_index - 1], curr_fp);
+    token_found_flag = true;
+}
+
 /**
  * Called to collect characters of an ID
  * @param num Not Used
@@ -168,6 +195,10 @@ void collect_id() {
 void collect_string_lit() {
     token_const = STRING_LITERAL;
     scanner_input_buffer_index--; //ignore the "
+}
+
+void collect_constant() {
+    token_const = CONSTANT;
 }
 
 /**
@@ -188,6 +219,9 @@ void collect_inline_comment() {
     }
 }
 
+/**
+ * Called to collect characters of a multiline comment
+ */
 void collect_multiline_comment() {
     int c;
     while ((c = getc(curr_fp)) != EOF) {
