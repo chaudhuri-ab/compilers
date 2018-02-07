@@ -65,11 +65,23 @@ int next_token() {
 
     while ((c = getc(curr_fp)) != EOF && !token_found_flag) {
         if (token_const != STRING_LITERAL && beginning_of_token_found && (c == '\n' || c == ' ' || c == '\t')) {
+#ifdef VERBOSE_SCANNER
+            //printf("| State = %d |", scanner_current_state);
+            printf("%s%c%s", KCYN, c, KNRM);
+#endif
             break; //end of token
 
         } else if (token_const != STRING_LITERAL && (!beginning_of_token_found && (c == '\n' || c == ' ' || c == '\t'))) {
+#ifdef VERBOSE_SCANNER
+            //printf("| State = %d |", scanner_current_state);
+            printf("%s%c%s", KCYN, c, KNRM);
+#endif
             continue; //consume input
         } else if ((token_const == STRING_LITERAL) && (c == '\n' || c == ' ' || c == '\t')) {
+#ifdef VERBOSE_SCANNER
+            //printf("| State = %d |", scanner_current_state);
+            printf("%s%c%s", KCYN, c, KNRM);
+#endif
             scanner_input_buffer[scanner_input_buffer_index++] = c;
             continue;
         } else {
