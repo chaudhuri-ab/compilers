@@ -43,7 +43,8 @@ struct token keywords[KEYWORD_COUNT] = {
     {"do", DO},
     {"if", IF},
     {"static", STATIC},
-    {"while", WHILE}
+    {"while", WHILE},
+    {"#include", INCLUDE}
 };
 
 /**
@@ -184,6 +185,13 @@ void token_found_unget_return(int token_val) {
 }
 
 /**
+ * Token Found Push Back Last Char and Return Token
+ */
+void token_found_direct_return_w_val(int token_val) {
+    token_const = token_val;
+    token_found_flag = true;
+}
+/**
  * Called to collect characters of an ID
  * @param num Not Used
  */
@@ -199,6 +207,10 @@ void collect_string_lit() {
 
 void collect_constant() {
     token_const = CONSTANT;
+}
+
+void collect_token(int token){
+    token_const = token;
 }
 
 /**

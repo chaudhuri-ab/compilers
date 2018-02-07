@@ -14,7 +14,15 @@ struct test{
 
 int main(int argc, char** argv) {
     struct test t1;
-    t1.val = 100;
+    struct test* ptest;
+    ptest = &t1;
+    
+    int value = 100;
+    t1.val = value++;
+    t1.val = value--;
+    t1.val = --value;
+    t1.val = ++value;
+  
     float e = 0.2;
     float f = .4;
     int c = 012;
@@ -24,6 +32,7 @@ int main(int argc, char** argv) {
     int a = 10;
     int b = 20;
     int result = a + b;
+    result = a -b;
     printf("Result %d\n", result);
     return (EXIT_SUCCESS);
 }

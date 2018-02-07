@@ -21,12 +21,14 @@ extern FILE* curr_fp; /* current file pointer scanner is using */
 
 extern struct val token_value; /* Used By Parser To Get Token Value */
 extern int scanner_current_state; 
-extern struct state scanner_state_machine[11][94];
+#define NUM_STATES 12
+#define NUM_ALPHABET 94
+extern struct state scanner_state_machine[NUM_STATES][NUM_ALPHABET];
 
 //
 
 
-#define KEYWORD_COUNT 32
+#define KEYWORD_COUNT 33
 extern struct token keywords[KEYWORD_COUNT];
 
 
@@ -64,6 +66,7 @@ extern struct token keywords[KEYWORD_COUNT];
 #define IF 329
 #define STATIC 330
 #define WHILE 331
+#define INCLUDE 1332
 
 //
 
@@ -72,8 +75,8 @@ extern struct token keywords[KEYWORD_COUNT];
 #define ELLIPSIS 332 /* ... */
 #define RIGHT_ASSIGN 333 /* >>= */
 #define LEFT_ASSIGN 334 /* <<= */
-#define ADD_ASSIGN 335 /* += */
-#define SUB_ASSIGN 336 /* -= */
+#define ADD_ASSIGN 335 /* += */ /*Done*/
+#define SUB_ASSIGN 336 /* -= */ /*Done*/
 #define MUL_ASSIGN 337 /* *= */
 #define DIV_ASSIGN 338 /* /= */
 #define MOD_ASSIGN 339 /* %= */
@@ -82,8 +85,8 @@ extern struct token keywords[KEYWORD_COUNT];
 #define OR_ASSIGN 342 /* |= */
 #define RIGHT_OP 343 /* >> */
 #define LEFT_OP 344 /* << */
-#define INC_OP 345 /* ++ */
-#define DEC_OP 346 /* -- */
+#define INC_OP 345 /* ++ */  /*Done*/
+#define DEC_OP 346 /* -- */ /*Done*/
 #define PTR_OP 347 /* -> */
 #define AND_OP 348 /* && */
 #define OR_OP 349 /* || */

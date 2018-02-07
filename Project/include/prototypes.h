@@ -46,6 +46,8 @@ void string_lit_found_return();
 void collect_constant();
 void constant_found_return();
 void token_found_unget_return(int token_val);
+void token_found_direct_return_w_val(int token_val);
+void collect_token(int token);
 
 /* symbol_tab.c */
 void print_symbol_table(struct hash_table* symbol_table);
