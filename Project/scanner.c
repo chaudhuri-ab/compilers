@@ -10,43 +10,6 @@ char scanner_input_buffer[SCANNER_INPUT_BUFFER];
 size_t scanner_input_buffer_index;
 
 
-//Keep in sych with token constant values in scanner.h to ensure accuracy of initialization
-struct token keywords[KEYWORD_COUNT] = {
-    {"auto", AUTO},
-    {"double", DOUBLE},
-    {"int", INT},
-    {"struct", STRUCT},
-    {"const", CONST},
-    {"float", FLOAT},
-    {"short", SHORT},
-    {"unsigned", UNSIGNED},
-    {"break", BREAK},
-    {"else", ELSE},
-    {"long", LONG},
-    {"switch", SWITCH},
-    {"continue", CONTINUE},
-    {"for", FOR},
-    {"signed", SIGNED},
-    {"void", VOID},
-    {"case", CASE},
-    {"enum", ENUM},
-    {"register", REGISTER},
-    {"typedef", TYPEDEF},
-    {"default", DEFAULT},
-    {"goto", GOTO},
-    {"sizeof", SIZEOF},
-    {"volatile", VOLATILE},
-    {"char", CHAR},
-    {"extern", EXTERN},
-    {"return", RETURN},
-    {"union", UNION},
-    {"do", DO},
-    {"if", IF},
-    {"static", STATIC},
-    {"while", WHILE},
-    {"#include", INCLUDE}
-};
-
 /**
  * Get next token
  * @return return int of token found
@@ -187,12 +150,18 @@ void id_found_return() {
     scanner_input_buffer[scanner_input_buffer_index] = '\0';
 }
 
+/**
+ * Called during transition if a string literal ("string") is found
+ */
 void string_lit_found_return() {
     //ungetc(scanner_input_buffer[scanner_input_buffer_index - 1], curr_fp);
     token_found_flag = true;
     scanner_input_buffer[scanner_input_buffer_index - 1] = '\0';
 }
 
+/**
+ * Called during transition if constant is found.
+ */
 void constant_found_return() {
     ungetc(scanner_input_buffer[scanner_input_buffer_index - 1], curr_fp);
     scanner_input_buffer_index--;
@@ -220,29 +189,42 @@ void token_found_direct_return_w_val(int token_val) {
 
 /**
  * Called to collect characters of an ID
- * @param num Not Used
  */
 void collect_id() {
     //printf("\nCollect\n");
     token_const = ID;
 }
 
+/**
+ * Collecting potential preprocessor token
+ */
 void collect_preprocessor() {
     token_const = PREPROCESSOR_FLAG;
 }
 
+/**
+ * Collecting string literal characters
+ */
 void collect_string_lit() {
     token_const = STRING_LITERAL;
     scanner_input_buffer_index--; //ignore the "
 }
 
+/**
+ * Collecting Constant
+ */
 void collect_constant() {
     token_const = CONSTANT;
 }
 
+/**
+ * Collecting a token that has repeating characters
+ * @param token constant of smaller token to be used if larger token is not found (e.g. + when trying to find += or ++)
+ */
 void collect_token(int token) {
     token_const = token;
 }
+
 
 /**
  * Called to collect characters of an inline comment
