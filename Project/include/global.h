@@ -21,7 +21,7 @@
 //Debug Flags
 //#define VERBOSE_SCANNER
 //#define SCANNER_PROCESS_BAD_TOKEN /*Process Bad Tokens */
-
+#define SCANNER_TEST /* Calls Scanner and Quites Program */
 
 //
 

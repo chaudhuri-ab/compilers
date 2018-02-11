@@ -225,7 +225,6 @@ void collect_token(int token) {
     token_const = token;
 }
 
-
 /**
  * Called to collect characters of an inline comment
  */

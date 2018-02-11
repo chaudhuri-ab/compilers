@@ -29,7 +29,7 @@ void init(int args, char* argc[]);
 
 /* parser.c */
 void parse();
-
+void scanner_test();
 
 /* scanner.c */
 int next_token();
