@@ -53,7 +53,6 @@ struct token keywords[KEYWORD_COUNT] = {
  */
 int next_token() {
     reset_scanner();
-
     struct state next_state;
     void (*fcn_ptr)(int);
     void (*fcn_ptr2)();
@@ -69,6 +68,7 @@ int next_token() {
             //printf("| State = %d |", scanner_current_state);
             printf("%s%c%s", KCYN, c, KNRM);
 #endif
+            scanner_input_buffer[scanner_input_buffer_index++] = '\0';
             break; //end of token
 
         } else if (token_const != STRING_LITERAL && (!beginning_of_token_found && (c == '\n' || c == ' ' || c == '\t'))) {
@@ -182,8 +182,9 @@ void token_found_direct_return() {
  */
 void id_found_return() {
     ungetc(scanner_input_buffer[scanner_input_buffer_index - 1], curr_fp);
+    scanner_input_buffer_index--;
     token_found_flag = true;
-    scanner_input_buffer[scanner_input_buffer_index - 1] = '\0';
+    scanner_input_buffer[scanner_input_buffer_index] = '\0';
 }
 
 void string_lit_found_return() {
@@ -194,8 +195,9 @@ void string_lit_found_return() {
 
 void constant_found_return() {
     ungetc(scanner_input_buffer[scanner_input_buffer_index - 1], curr_fp);
+    scanner_input_buffer_index--;
     token_found_flag = true;
-    scanner_input_buffer[scanner_input_buffer_index - 1] = '\0';
+    scanner_input_buffer[scanner_input_buffer_index] = '\0';
 }
 
 /**
@@ -204,6 +206,7 @@ void constant_found_return() {
 void token_found_unget_return(int token_val) {
     token_const = token_val;
     ungetc(scanner_input_buffer[scanner_input_buffer_index - 1], curr_fp);
+    scanner_input_buffer_index--;
     token_found_flag = true;
 }
 
@@ -249,7 +252,7 @@ void collect_inline_comment() {
     while ((c = getc(curr_fp)) != EOF && c != '\n') {
         //consume comments
 #ifdef VERBOSE_SCANNER
-        printf(" %sChar = %c%s\n ", KGRN, c, KNRM);
+        printf(" %sChar = %c%s\n ", KRED, c, KNRM);
 #endif
     }
     if (c == EOF) {
@@ -272,7 +275,7 @@ void collect_multiline_comment() {
             }
         }
 #ifdef VERBOSE_SCANNER
-        printf(" %sChar = %c%s\n ", KRED, c, KNRM);
+        printf(" %sChar = %c%s\n ", KYEL, c, KNRM);
 #endif
     }
     if (c == EOF) {

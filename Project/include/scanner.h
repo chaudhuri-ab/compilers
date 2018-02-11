@@ -15,13 +15,12 @@ struct state {
 
 #define SCANNER_INPUT_BUFFER 1024
 
-
 //
 extern FILE* curr_fp; /* current file pointer scanner is using */
 
 extern struct val token_value; /* Used By Parser To Get Token Value */
 extern int scanner_current_state; 
-#define NUM_STATES 13
+#define NUM_STATES 25
 #define NUM_ALPHABET 94
 extern struct state scanner_state_machine[NUM_STATES][NUM_ALPHABET];
 
@@ -72,28 +71,28 @@ extern struct token keywords[KEYWORD_COUNT];
 
 
 //Double and Triple Op Tokens
-#define ELLIPSIS 332 /* ... */
-#define RIGHT_ASSIGN 333 /* >>= */
-#define LEFT_ASSIGN 334 /* <<= */
+#define ELLIPSIS 332 /* ... */  /*Done*/
+#define RIGHT_ASSIGN 333 /* >>= */ /*Done*/
+#define LEFT_ASSIGN 334 /* <<= */ /*Done*/
 #define ADD_ASSIGN 335 /* += */ /*Done*/
 #define SUB_ASSIGN 336 /* -= */ /*Done*/
-#define MUL_ASSIGN 337 /* *= */
-#define DIV_ASSIGN 338 /* /= */
-#define MOD_ASSIGN 339 /* %= */
-#define AND_ASSIGN 340 /* &= */
-#define XOR_ASSIGN 341 /* ^= */
-#define OR_ASSIGN 342 /* |= */
-#define RIGHT_OP 343 /* >> */
-#define LEFT_OP 344 /* << */
+#define MUL_ASSIGN 337 /* *= */ /*Done*/
+#define DIV_ASSIGN 338 /* /= */ /*Done*/
+#define MOD_ASSIGN 339 /* %= */ /*Done*/
+#define AND_ASSIGN 340 /* &= */ /*Done*/
+#define XOR_ASSIGN 341 /* ^= */ /*Done*/
+#define OR_ASSIGN 342 /* |= */ /*Done*/
+#define RIGHT_OP 343 /* >> */ /*Done*/
+#define LEFT_OP 344 /* << */  /*Done*/
 #define INC_OP 345 /* ++ */  /*Done*/
 #define DEC_OP 346 /* -- */ /*Done*/
-#define PTR_OP 347 /* -> */
-#define AND_OP 348 /* && */
-#define OR_OP 349 /* || */
-#define LE_OP 350 /* <= */
-#define GE_OP 351 /* >= */
-#define EQ_OP 352 /* == */
-#define NEQ_OP 353 /* != */
+#define PTR_OP 347 /* -> */ /*Done*/
+#define AND_OP 348 /* && */ /*Done*/
+#define OR_OP 349 /* || */ /*Done*/
+#define LE_OP 350 /* <= */ /*Done*/
+#define GE_OP 351 /* >= */ /*Done*/
+#define EQ_OP 352 /* == */ /*Done*/
+#define NEQ_OP 353 /* != */ /*Done*/
 
 
 #define STRING_LITERAL 354
