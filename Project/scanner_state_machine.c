@@ -1,16 +1,5 @@
 #include "global.h"
 
-/*
- TODO
- * String Lits - Done
- * Constant Whole Number - Done 
- * Constant Decimal - Pending start with decimal - Done
- * Constant Hex - Done
- * Multi Char Tokens
- * Include - Done
- * 
- */
-
 struct state scanner_state_machine[NUM_STATES][NUM_ALPHABET] = {
     { /* Index 0 Start State */
         {/* ! */23, &collect_token, '!'},
