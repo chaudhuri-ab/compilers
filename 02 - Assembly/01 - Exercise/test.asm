@@ -16,7 +16,7 @@ SECTION .data
         test_str: db "%2d) Test FCN Called!!!", 10, 0
         test_str_len equ $-test_str
         
-        test_str2: db "%2d) Test FCN2 Called!!!", 10, 0
+        test_str2: db `%2d) Test FCN2 \nCalled!!!`, 10, 0
         test_str2_len equ $-test_str2
 
         done: db 10, "DONE!!", 10, 0

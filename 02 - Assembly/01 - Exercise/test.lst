@@ -20,17 +20,17 @@
     20 00000033 65642121210A00     
     21                                          test_str_len equ $-test_str
     22                                          
-    23 0000003A 253264292054657374-             test_str2: db "%2d) Test FCN2 Called!!!", 10, 0
-    24 00000043 2046434E322043616C-
-    25 0000004C 6C65642121210A00   
+    23 0000003A 253264292054657374-             test_str2: db `%2d) Test FCN2 \nCalled!!!`, 10, 0
+    24 00000043 2046434E32200A4361-
+    25 0000004C 6C6C65642121210A00 
     26                                          test_str2_len equ $-test_str2
     27                                  
-    28 00000054 0A444F4E4521210A00              done: db 10, "DONE!!", 10, 0
+    28 00000055 0A444F4E4521210A00              done: db 10, "DONE!!", 10, 0
     29                                          done_len equ $-done
     30                                          
-    31 0000005D 0A0A25326429205265-             result_str: db 10,10,"%2d) Result = %d", 10, 10, 0
-    32 00000066 73756C74203D202564-
-    33 0000006F 0A0A00             
+    31 0000005E 0A0A25326429205265-             result_str: db 10,10,"%2d) Result = %d", 10, 10, 0
+    32 00000067 73756C74203D202564-
+    33 00000070 0A0A00             
     34                                  
     35                                  
     36                                  SECTION .bss			; Section containing uninitialized data
@@ -64,7 +64,7 @@
     64 00000040 E87B000000                          call    test_fcn2
     65                                              
     66 00000045 B909000000                          mov	    ecx, done_len
-    67 0000004A BE[54000000]                        mov	    esi, done
+    67 0000004A BE[55000000]                        mov	    esi, done
     68 0000004F BF[00000000]                        mov	    edi, buff
     69 00000054 FC                                  cld
     70 00000055 F3A4                                rep     movsb
@@ -78,13 +78,13 @@
     78                                              
     79                                              
     80                                                      
-    81 0000006C 68[54000000]                        push    done        ; Get length of done string
+    81 0000006C 68[55000000]                        push    done        ; Get length of done string
     82 00000071 E8(00000000)                        call    strlen
     83 00000076 81C404000000                        add     esp, 4
     84                                              
     85 0000007C 50                                  push    eax
-    86 0000007D 6801000000                          push    1
-    87 00000082 68[5D000000]                        push    result_str
+    86 0000007D 6802000000                          push    2
+    87 00000082 68[5E000000]                        push    result_str
     88 00000087 E8(00000000)                        call    printf      ; Print length of done string
     89 0000008C 81C40C000000                        add     esp, 12     
     90                                              
@@ -131,7 +131,7 @@
    131 000000F1 75E6                                jnz     .beg_loop
    132                                              
    133                                              
-   134 000000F3 68[54000000]                        push    done
+   134 000000F3 68[55000000]                        push    done
    135 000000F8 E8(00000000)                        call    printf
    136 000000FD 81C404000000                        add     esp, 4	; pop int
    137                                              
@@ -170,7 +170,7 @@
    170                                             
    171                                          .continue_fcn:
    172 00000141 6801000000                          push    1
-   173 00000146 68[5D000000]                        push    result_str
+   173 00000146 68[5E000000]                        push    result_str
    174 0000014B E8(00000000)                        call    printf
    175 00000150 81C408000000                        add     esp, 8	; pop int and string
    176                                              
