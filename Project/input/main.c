@@ -31,13 +31,15 @@ int main(int argc, char** argv) {
     temp2 = 98^7;
     temp2 = 97 ^ 2;
     temp2 ^=9;
-
+    temp2 = 'a';
+    
+    
     if (ptest -> val > 100 || 1 > 0 || 1 >= 55&& 1!= 99) {
         printf("Stuff1 \n");
     } else if (1 <= 55 && 2 < 55) {
-        printf("Stuff2 \n");
+        printf("\tStuff2 \n\n");
     } else if (10 == 10) {
-        printf("Stuff3 \n");
+        printf("\t\tStuff3 \n");
 
     }
 
@@ -59,6 +61,9 @@ int main(int argc, char** argv) {
     int result = a * b;
     result = a - b;
     printf("Result %d\n", result);
+    printf("\t\tStuff3 \n22\n"); //10
+    printf(""); //10
+    temp2 = 'a';
     return (EXIT_SUCCESS);
 }
 

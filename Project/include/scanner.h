@@ -20,7 +20,7 @@ extern FILE* curr_fp; /* current file pointer scanner is using */
 
 extern struct val token_value; /* Used By Parser To Get Token Value */
 extern int scanner_current_state; 
-#define NUM_STATES 25
+#define NUM_STATES 28
 #define NUM_ALPHABET 94
 extern struct state scanner_state_machine[NUM_STATES][NUM_ALPHABET];
 

@@ -187,6 +187,21 @@ void token_found_direct_return_w_val(int token_val) {
     token_found_flag = true;
 }
 
+
+void token_found_char_constant(int token_type){
+    token_const = token_type;
+    token_found_flag = true;
+    scanner_input_buffer[scanner_input_buffer_index - 1] = '\0';
+}
+
+
+void token_found_escaped_char_constant(char c){
+    token_const = CONSTANT;
+    token_found_flag = true;
+    scanner_input_buffer[scanner_input_buffer_index - 2] = c;
+    scanner_input_buffer[scanner_input_buffer_index - 1] = '\0';
+}
+
 /**
  * Called to collect characters of an ID
  */
@@ -208,6 +223,14 @@ void collect_preprocessor() {
 void collect_string_lit() {
     token_const = STRING_LITERAL;
     scanner_input_buffer_index--; //ignore the "
+}
+
+/**
+ * Collecting char literal characters
+ */
+void collect_char_lit() {
+    token_const = CONSTANT;
+    scanner_input_buffer_index--; //ignore the '
 }
 
 /**
@@ -264,6 +287,13 @@ void collect_multiline_comment() {
     } else {
         reset_scanner();
     }
+}
+
+
+void string_escape_char(char c){
+    scanner_input_buffer_index = scanner_input_buffer_index - 2;
+    scanner_input_buffer[scanner_input_buffer_index++] = c;
+    
 }
 
 /**

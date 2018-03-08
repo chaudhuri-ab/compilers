@@ -19,6 +19,9 @@ void scanner_test() {
         printf("\nToken Found - %d", val);
         if (val == ID || val == STRING_LITERAL || val == CONSTANT) {
             printf(" Val_ = %s%s%s", KGRN, (char*) token_value.pointer, KNRM);
+            if(val == STRING_LITERAL){
+                //printf(" (Length = %ld) ", strlen((char*) token_value.pointer));
+            }
             free(token_value.pointer);
             token_value.pointer = NULL;
         } else {
