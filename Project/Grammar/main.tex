@@ -129,15 +129,58 @@
 
 	\begin{equation} \label{eq_2_1}
 		\begin{aligned}
-			program &\Rightarrow expr\ EOF
+			program &\Rightarrow body\ \  EOF
 		\end{aligned}
 	\end{equation}
-
+	
+	\hfill\\\hfill\\
 	\begin{equation} \label{eq_2_1}
 		\begin{aligned}
-			program &\Rightarrow expr\ EOF
+			body \Rightarrow\ \ &stmt \\
+				&|\ \ stmt\ \ body
 		\end{aligned}
 	\end{equation}
+	
+	\hfill\\\hfill\\
+	\begin{equation} \label{eq_2_1}
+		\begin{aligned}
+			stmt \Rightarrow\ \ &ID\ \ '=' \ \ expr \ \ ';'\\
+				&|\ \ ID\ \ '=' \ \ bexpr \ \ ';'\\
+				&|\ \ IF\ \ '('\ \ bexp \ \ ')' \ \ '\{' \ \ stmt\ \ '\}'\\
+		\end{aligned}
+	\end{equation}
+	
+	\hfill\\\hfill\\
+	Notes - Continue down this route
+	
+	TODO
+	\begin{itemize}
+		\item expr - arithmetic expressions. Make sure to get precedence (greater precedence last) and associativity correct.
+		From \url{http://pages.cs.wisc.edu/~fischer/cs536.s08/course.hold/html/NOTES/3.CFG.html#assoc} Remove POW
+		\begin{verbatim}
+			exp      --> exp PLUS term        |  exp MINUS term      |  term
+			term     --> term TIMES factor    |  term DIVIDE factor  |  factor
+			factor   --> exponent POW factor  |  exponent
+			exponent --> MINUS exponent       |  final
+			final    --> INTLITERAL           |  LPAREN exp RPAREN
+
+		
+		\end{verbatim}
+		
+		
+		\item bexpr - boolean expressions
+		
+		\begin{verbatim}
+		bexp --> TRUE
+		bexp --> FALSE
+		bexp --> bexp OR bexp
+		bexp --> bexp AND bexp
+		bexp --> NOT bexp
+		bexp --> LPAREN bexp RPAREN
+		
+		\end{verbatim}
+		\item  stmt - add if and while loops to it. Need to make sure no ambiguity in control statements. 
+	\end{itemize}
 
 
 \end{document}
