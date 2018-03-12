@@ -281,8 +281,8 @@ compound_statement
 	
 	
 compound_statement_tail
-	: '}'
-	| statement_list '}'
+	: '}' semi_colon_list
+	| statement_list '}' semi_colon_list
 	
 
 expression_statement
