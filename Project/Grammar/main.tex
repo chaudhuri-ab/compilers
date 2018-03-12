@@ -75,7 +75,7 @@
 
 \lstset{
 	  frame=none,
-	  language=Python,
+	  language=C,
 	  aboveskip=3mm,
 	  belowskip=3mm,
 	  showstringspaces=false,
@@ -127,6 +127,113 @@
 \begin{document}
 \fontsize{12}{16}\selectfont
 
+{\color{myblue} \textbf{Grammar:}}
+
+
+\begin{lstlisting}[]
+assignment_operator //Code Gen = first. Add more later
+	: '='
+	| MUL_ASSIGN
+	| DIV_ASSIGN
+	| MOD_ASSIGN
+	| ADD_ASSIGN
+	| SUB_ASSIGN
+	| LEFT_ASSIGN
+	| RIGHT_ASSIGN
+	| AND_ASSIGN
+	| XOR_ASSIGN
+	| OR_ASSIGN
+	
+	
+	
+type
+	: VOID
+	| CHAR
+	| SHORT
+	| INT
+	| LONG
+	| FLOAT
+	| DOUBLE
+	| SIGNED
+	| UNSIGNED
+	
+	
+	
+type_specifier
+	: type
+	| SIGNED type
+	| UNSIGNED type
+	
+	
+	
+program
+	:  body EOF
+	
+	
+	
+body
+	: statement
+	| statement body
+	
+	
+	
+statement
+	: compound_statement //Sub statements to loops, conditional, and code blocks
+	| expression_statement //Assignment and Boolean Expressions
+	| selection_statement //IF Statements (Implement Later)
+	| iteration_statement	 //Loops
+	
+	
+		
+statement_list
+	: statement
+	|  statement statement_list
+	
+	
+
+compound_statement
+	: '{' '}'
+	| '{' statement_list '}'
+	
+	
+	
+expression_statement
+	: ';'
+	| expression ';'
+
+//TODO Add Expression
+	
+	
+selection_statement
+	: IF '(' expression ')' statement
+	| IF '(' expression ')' statement ELSE statement
+	
+	
+	
+iteration_statement
+	: WHILE '(' expression ')' statement
+	| FOR '(' expression_statement expression_statement ')' statement
+	| FOR '(' expression_statement expression_statement expression ')' statement
+	
+
+	
+	
+
+\end{lstlisting}
+
+
+
+
+
+
+
+
+
+
+
+\newpage
+
+
 	\begin{equation} \label{eq_2_1}
 		\begin{aligned}
 			program &\Rightarrow body\ \  EOF
@@ -141,14 +248,49 @@
 		\end{aligned}
 	\end{equation}
 	
-	\hfill\\\hfill\\
+	
+	
+	\hfill\\\hfill\\ 
 	\begin{equation} \label{eq_2_1}
 		\begin{aligned}
 			stmt \Rightarrow\ \ &ID\ \ '=' \ \ expr \ \ ';'\\
-				&|\ \ ID\ \ '=' \ \ bexpr \ \ ';'\\
-				&|\ \ IF\ \ '('\ \ bexp \ \ ')' \ \ '\{' \ \ stmt\ \ '\}'\\
+				&|\ \ IF\ \ '('\ \ bexp \ \ ')' \ \ stmt\\
+				&|\ \ WHILE\  \ '('\ \ bexp \ \ ')' \ \ stmt\\
+				&| \ \  '\{' \ \ substmts\\
+				&|\ \ ';'
 		\end{aligned}
 	\end{equation}
+	
+	
+	
+	
+	\hfill\\\hfill\\
+	\begin{equation} \label{eq_2_1}
+		\begin{aligned}
+			substmts \Rightarrow\ \ &stmt\ \ '\}'\\
+				&|\ \ stmt\ \ substmts\\
+				&|\ \  '\}'\\
+		\end{aligned}
+	\end{equation}
+	
+	
+	\hfill\\\hfill\\
+	\begin{equation} \label{eq_2_1}
+		\begin{aligned}
+			assignment \Rightarrow\ \ &ID\ \ '='\ \ expression\ \ ';'\\
+		\end{aligned}
+	\end{equation}
+	
+	
+	\hfill\\\hfill\\
+	\begin{equation} \label{eq_2_1}
+		\begin{aligned}
+			expression \Rightarrow\ \ &expr\\
+				&|\ \ bexpr
+		\end{aligned}
+	\end{equation}
+	
+	
 	
 	\hfill\\\hfill\\
 	Notes - Continue down this route
