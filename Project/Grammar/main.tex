@@ -176,6 +176,7 @@ type_specifier //TODO Const, Volatile later
 	: type
 	| SIGNED type
 	| UNSIGNED type
+	| VOID //Compiler will ensure no variable are void while allowing void fcns
 
 ---
 
@@ -210,38 +211,23 @@ program
 
 //Body
 
-body_statement
-	: statement body_statement_tail
+body_typed_ID
+	: typed_ID_common_prefix $\ \ $ body_typed_ID_tail
 	
-body_statement_tail
-	: $\epsilon$ 
-	: body
-	
-body_direct_declaration
-	: direct_declaration body_direct_declaration_tail
-	
-body_direct_declaration_tail
-	: $\epsilon$ 
-	: body
-	
-body_function_declaration
-	: function_declaration body_function_declaration_tail
-	
-body_function_declaration_tail
-	: $\epsilon$ 
-	: body
-	
-body_function_prototype
-	: function_declaration body_function_prototype_tail
-	
-body_function_prototype_tail
+body_typed_ID_tail
 	: $\epsilon$ 
 	: body
 
+body_direct_declaration
+	: direct_declaration $\ \ $ body_direct_declaration_tail
+	
+body_direct_declaration_tail
+	: $\epsilon$ 
+	: body	
+
 body
+	: body_typed_ID
 	| body_direct_declaration
-	| body_function_declaration
-	| body_function_prototype
 
 ---
 
@@ -249,36 +235,25 @@ body
 
 typed_ID_common_prefix
 	: typed_ID typed_ID_tail
-	| VOID '(' function_prefix
 	
 typed_ID_tail:
-	: '(' function_prefix
-	| //TODO Variable stuff
+	: '(' function_prefix  //Functions
+	|  assignment_operator expression //TODO expression
 
 function_prefix
-	:  typed_ID 
-	|  VOID '('
-
-function_prototype
-	:  function_prefix type_specifier_list ')' semi_colon_list
-	|  function_declaration_prefix semi_colon_list
+	: type_specifier_list ')' semi_colon_list //Prototype
+	| parameter_specifier_list ')' function_tail
 	
-function_declaration
-	:  function_prefix parameter_specifier_list ')' '{' statement_list '}' 
-	
-function_declaration_tail
-	|  semi_colon_list
-	|  $\epsilon$ 
+function_tail
+	: semi_colon_list  //Prototype
+	| '{' statement_list '}' //Function Statements
 
 ---
 
 //Direct Declaration 
 
 direct_declaration
-	: type_ID semi_colon_list
-	| SIGNED type ID semi_colon_list
-	| UNSIGNED type ID semi_colon_list
-	| VOID ID semi_colon_list 
+	: type_specifier ID semi_colon_list
 	| CHAR ID '='  STRING_LITERAL semi_colon_list
 	
 ---
@@ -311,26 +286,33 @@ compound_statement_tail
 	
 
 expression_statement
-	: ';'
-	| expression ';'
+	: semi_colon_list
+	| expression
 
-//TODO Add Expression
-expression	
-	
-selection_statement
-	: IF '(' expression ')' statement
-	| IF '(' expression ')' statement ELSE statement
+expression
+	: //TODO	
 	
 	
+selection_statement //TODO Case STMT Later
+	| if_stmt
+	
+if_stmt
+	: IF '(' expression ')' statement_list if_stmt_tail
+
+if_stmt_tail
+	: $\epsilon$
+	| ELSE statement_list 	
 	
 iteration_statement
-	: WHILE '(' expression ')' statement
-	| FOR '(' expression_statement expression_statement ')' statement
-	| FOR '(' expression_statement expression_statement expression ')' statement
-	
+	: WHILE '(' expression ')' statement_list
+	| for_stmt
 
+for_stmt
+	:  FOR '(' expression_statement expression_statement for_stmt_tail
 	
-	
+for_stmt_tail
+	: ')' statement_list
+	| expression ')' statement_list	
 
 \end{lstlisting}
 
@@ -346,65 +328,6 @@ iteration_statement
 
 \newpage
 
-
-	\begin{equation} \label{eq_2_1}
-		\begin{aligned}
-			program &\Rightarrow body\ \  EOF
-		\end{aligned}
-	\end{equation}
-	
-	\hfill\\\hfill\\
-	\begin{equation} \label{eq_2_1}
-		\begin{aligned}
-			body \Rightarrow\ \ &stmt \\
-				&|\ \ stmt\ \ body
-		\end{aligned}
-	\end{equation}
-	
-	
-	
-	\hfill\\\hfill\\ 
-	\begin{equation} \label{eq_2_1}
-		\begin{aligned}
-			stmt \Rightarrow\ \ &ID\ \ '=' \ \ expr \ \ ';'\\
-				&|\ \ IF\ \ '('\ \ bexp \ \ ')' \ \ stmt\\
-				&|\ \ WHILE\  \ '('\ \ bexp \ \ ')' \ \ stmt\\
-				&| \ \  '\{' \ \ substmts\\
-				&|\ \ ';'
-		\end{aligned}
-	\end{equation}
-	
-	
-	
-	
-	\hfill\\\hfill\\
-	\begin{equation} \label{eq_2_1}
-		\begin{aligned}
-			substmts \Rightarrow\ \ &stmt\ \ '\}'\\
-				&|\ \ stmt\ \ substmts\\
-				&|\ \  '\}'\\
-		\end{aligned}
-	\end{equation}
-	
-	
-	\hfill\\\hfill\\
-	\begin{equation} \label{eq_2_1}
-		\begin{aligned}
-			assignment \Rightarrow\ \ &ID\ \ '='\ \ expression\ \ ';'\\
-		\end{aligned}
-	\end{equation}
-	
-	
-	\hfill\\\hfill\\
-	\begin{equation} \label{eq_2_1}
-		\begin{aligned}
-			expression \Rightarrow\ \ &expr\\
-				&|\ \ bexpr
-		\end{aligned}
-	\end{equation}
-	
-	
-	
 	\hfill\\\hfill\\
 	Notes - Continue down this route
 	
