@@ -174,7 +174,6 @@ type
 	
 type_specifier //TODO Const, Volatile later
 	: type
-	| VOID
 	| SIGNED type
 	| UNSIGNED type
 
@@ -203,6 +202,7 @@ parameter_specifer_list_tail
 ---
 
 //Program	
+
 program
 	:  body EOF
 
@@ -239,24 +239,32 @@ body_function_prototype_tail
 	: body
 
 body
-	: body_statement
 	| body_direct_declaration
 	| body_function_declaration
 	| body_function_prototype
 
 ---
 
-//Function Declaration
+//Function Declaration & Direct Variable Declaration
+
+typed_ID_common_prefix
+	: typed_ID typed_ID_tail
+	| VOID '(' function_prefix
+	
+typed_ID_tail:
+	: '(' function_prefix
+	| //TODO Variable stuff
 
 function_prefix
-	:  typed_ID '('
+	:  typed_ID 
+	|  VOID '('
 
 function_prototype
 	:  function_prefix type_specifier_list ')' semi_colon_list
 	|  function_declaration_prefix semi_colon_list
 	
 function_declaration
-	:  function_prefix parameter_specifier_list ')' '{' statement '}' 
+	:  function_prefix parameter_specifier_list ')' '{' statement_list '}' 
 	
 function_declaration_tail
 	|  semi_colon_list
@@ -292,13 +300,16 @@ statement_list_tail
 	: statment_list
 	| $\epsilon$
 	
-	
+
 compound_statement
-	: '{' '}'
-	| '{' statement_list '}'
+	: '{' compound_statement_tail
 	
 	
+compound_statement_tail
+	: '}'
+	| statement_list '}'
 	
+
 expression_statement
 	: ';'
 	| expression ';'
