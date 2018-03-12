@@ -130,7 +130,20 @@
 {\color{myblue} \textbf{Grammar:}}
 
 
-\begin{lstlisting}[]
+\begin{lstlisting}[mathescape=true]
+// List of Colons
+
+semi_colon_list
+	:  ';'  semi_colon_list_tail
+
+semi_colon_list_tail
+	: semi_colon_list
+	| $\epsilon$
+	
+---
+
+// Assignment Operators
+
 assignment_operator //Code Gen = first. Add more later
 	: '='
 	| MUL_ASSIGN
@@ -143,54 +156,143 @@ assignment_operator //Code Gen = first. Add more later
 	| AND_ASSIGN
 	| XOR_ASSIGN
 	| OR_ASSIGN
-	
-	
-	
+
+---
+
+//Data Types
+
+typed_ID
+	: type_specifier ID
+
 type
-	: VOID
-	| CHAR
+	: CHAR
 	| SHORT
 	| INT
 	| LONG
 	| FLOAT
 	| DOUBLE
-	| SIGNED
-	| UNSIGNED
 	
-	
-	
-type_specifier
+type_specifier //TODO Const, Volatile later
 	: type
+	| VOID
 	| SIGNED type
 	| UNSIGNED type
+
+---
+
+//Type List
+
+type_specifier_list
+	:  type_specifier type_specifier_list_tail
 	
+type_specifier_list_tail
+	:  $\epsilon$
+	| ',' type_specifier_list
 	
+---	
+
+//Parameter List
+
+parameter_specifier_list
+	:  type_specifier ID parameter_specifer_tail
 	
+parameter_specifer_list_tail
+	: $\epsilon$
+	| ','   parameter_specifier_list
+	
+---
+
+//Program	
 program
 	:  body EOF
+
+---
+
+//Body
+
+body_statement
+	: statement body_statement_tail
 	
+body_statement_tail
+	: $\epsilon$ 
+	: body
 	
+body_direct_declaration
+	: direct_declaration body_direct_declaration_tail
 	
+body_direct_declaration_tail
+	: $\epsilon$ 
+	: body
+	
+body_function_declaration
+	: function_declaration body_function_declaration_tail
+	
+body_function_declaration_tail
+	: $\epsilon$ 
+	: body
+	
+body_function_prototype
+	: function_declaration body_function_prototype_tail
+	
+body_function_prototype_tail
+	: $\epsilon$ 
+	: body
+
 body
-	: statement
-	| statement body
+	: body_statement
+	| body_direct_declaration
+	| body_function_declaration
+	| body_function_prototype
+
+---
+
+//Function Declaration
+
+function_prefix
+	:  typed_ID '('
+
+function_prototype
+	:  function_prefix type_specifier_list ')' semi_colon_list
+	|  function_declaration_prefix semi_colon_list
 	
+function_declaration
+	:  function_prefix parameter_specifier_list ')' '{' statement '}' 
 	
+function_declaration_tail
+	|  semi_colon_list
+	|  $\epsilon$ 
+
+---
+
+//Direct Declaration 
+
+direct_declaration
+	: type_ID semi_colon_list
+	| SIGNED type ID semi_colon_list
+	| UNSIGNED type ID semi_colon_list
+	| VOID ID semi_colon_list 
+	| CHAR ID '='  STRING_LITERAL semi_colon_list
+	
+---
+
+//Statement and Statement List	
 	
 statement
 	: compound_statement //Sub statements to loops, conditional, and code blocks
-	| expression_statement //Assignment and Boolean Expressions
-	| selection_statement //IF Statements (Implement Later)
+	| expression_statement //Assignment, Boolean, Arithmetic Expressions
+	| selection_statement //IF Statements
 	| iteration_statement	 //Loops
-	
-	
-		
+	| semi_colon_list // End of statement one or more ;
+	| direct_declaration
+			
 statement_list
-	: statement
-	|  statement statement_list
-	
-	
+	: statement statement_list_tail
 
+statement_list_tail
+	: statment_list
+	| $\epsilon$
+	
+	
 compound_statement
 	: '{' '}'
 	| '{' statement_list '}'
@@ -202,7 +304,7 @@ expression_statement
 	| expression ';'
 
 //TODO Add Expression
-	
+expression	
 	
 selection_statement
 	: IF '(' expression ')' statement
