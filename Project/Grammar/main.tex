@@ -287,11 +287,27 @@ compound_statement_tail
 
 expression_statement
 	: semi_colon_list
-	| expression
+	| expression semi_colon_list
 
 expression
-	: //TODO	
+	: boolean_expression
+	| assignment_expression
+	| arithmetic_expression
+
+boolean_expression
+	: //TODO
 	
+arithmetic_expression
+	: //TODO
+	
+assignment_expression
+	: typed_ID assignment_operator assignment_tail semi_colon_list
+
+assignment_tail
+	: CONSTANT
+	| STRING_LITERAL
+	| boolean_expression
+	| arithmetic_expression
 	
 selection_statement //TODO Case STMT Later
 	| if_stmt
