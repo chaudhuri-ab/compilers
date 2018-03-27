@@ -210,6 +210,10 @@ program
 
 //Body
 
+body
+	: body_typed_ID
+	| body_direct_declaration
+	
 body_typed_ID
 	: typed_ID_common_prefix $\ \ $ body_typed_ID_tail
 	
@@ -223,10 +227,6 @@ body_direct_declaration
 body_direct_declaration_tail
 	: $\epsilon$ 
 	: body	
-
-body
-	: body_typed_ID
-	| body_direct_declaration
 
 ---
 
@@ -289,25 +289,72 @@ expression_statement
 	: semi_colon_list
 	| expression semi_colon_list
 
-expression
-	: boolean_expression
-	| assignment_expression
-	| arithmetic_expression
+---
 
-boolean_expression
-	: //TODO
+//Expression and Boolean Expression
+
+expression
+	: expr
+	| assignment_expression
+
+expr
+	: bool
+	| bool boolop bool
 	
-arithmetic_expression
-	: //TODO
+bool
+	: rel
+	| rel relop rel
 	
+rel
+	: fact
+	| fact addop fact
+	
+fact
+	: term
+	| term mulop term
+	
+term
+	: (expr)
+	| addop term
+	| ID ID_Tail
+	| CONSTANT
+
+ID_Tail
+	: INC_OP //++
+	: DEC_OP //--
+	
+boolop
+	: AND_OP //&&
+	| OR_OP //||
+	| |
+	| &
+	
+mulop
+	: *
+	| /
+	
+addop
+	: +
+	| -
+	
+relop
+	: LE_OP
+	| GE_OP
+	| <
+	| >
+
+
 assignment_expression
 	: typed_ID assignment_operator assignment_tail semi_colon_list
 
 assignment_tail
 	: CONSTANT
 	| STRING_LITERAL
-	| boolean_expression
-	| arithmetic_expression
+	| expression
+
+---
+
+//Selection Statement - IF
 	
 selection_statement //TODO Case STMT Later
 	| if_stmt
@@ -318,6 +365,10 @@ if_stmt
 if_stmt_tail
 	: $\epsilon$
 	| ELSE statement_list 	
+
+---
+
+// Iteration Statement - While and For
 	
 iteration_statement
 	: WHILE '(' expression ')' statement_list
@@ -338,44 +389,44 @@ for_stmt_tail
 
 
 
-
-
-
-
-\newpage
-
-	\hfill\\\hfill\\
-	Notes - Continue down this route
-	
-	TODO
-	\begin{itemize}
-		\item expr - arithmetic expressions. Make sure to get precedence (greater precedence last) and associativity correct.
-		From \url{http://pages.cs.wisc.edu/~fischer/cs536.s08/course.hold/html/NOTES/3.CFG.html#assoc} Remove POW
-		\begin{verbatim}
-			exp      --> exp PLUS term        |  exp MINUS term      |  term
-			term     --> term TIMES factor    |  term DIVIDE factor  |  factor
-			factor   --> exponent POW factor  |  exponent
-			exponent --> MINUS exponent       |  final
-			final    --> INTLITERAL           |  LPAREN exp RPAREN
-
-		
-		\end{verbatim}
-		
-		
-		\item bexpr - boolean expressions
-		
-		\begin{verbatim}
-		bexp --> TRUE
-		bexp --> FALSE
-		bexp --> bexp OR bexp
-		bexp --> bexp AND bexp
-		bexp --> NOT bexp
-		bexp --> LPAREN bexp RPAREN
-		
-		\end{verbatim}
-		\item  stmt - add if and while loops to it. Need to make sure no ambiguity in control statements. 
-	\end{itemize}
-
+%
+%
+%
+%
+%\newpage
+%
+%	\hfill\\\hfill\\
+%	Notes - Continue down this route
+%	
+%	TODO
+%	\begin{itemize}
+%		\item expr - arithmetic expressions. Make sure to get precedence (greater precedence last) and associativity correct.
+%		From \url{http://pages.cs.wisc.edu/~fischer/cs536.s08/course.hold/html/NOTES/3.CFG.html#assoc} Remove POW
+%		\begin{verbatim}
+%			exp      --> exp PLUS term        |  exp MINUS term      |  term
+%			term     --> term TIMES factor    |  term DIVIDE factor  |  factor
+%			factor   --> exponent POW factor  |  exponent
+%			exponent --> MINUS exponent       |  final
+%			final    --> INTLITERAL           |  LPAREN exp RPAREN
+%
+%		
+%		\end{verbatim}
+%		
+%		
+%		\item bexpr - boolean expressions
+%		
+%		\begin{verbatim}
+%		bexp --> TRUE
+%		bexp --> FALSE
+%		bexp --> bexp OR bexp
+%		bexp --> bexp AND bexp
+%		bexp --> NOT bexp
+%		bexp --> LPAREN bexp RPAREN
+%		
+%		\end{verbatim}
+%		\item  stmt - add if and while loops to it. Need to make sure no ambiguity in control statements. 
+%	\end{itemize}
+%
 
 \end{document}
 
