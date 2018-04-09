@@ -4,7 +4,7 @@ prog: *.c
 	gcc -o dist/app $^ -I . -I include/ -lm -lfl -g
 
 compiler: clean
-	bison -d main.y && flex main.l
+	bison -d -v main.y && flex main.l
 clean:
 	rm -f dist/app
 	rm -f main.tab.c
