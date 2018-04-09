@@ -78,17 +78,18 @@ extern int yydebug;
     COLON = 288,
     PERIOD = 289,
     COMMA = 290,
-    INT = 291,
-    FLOAT = 292,
-    CHAR = 293,
-    DOUBLE = 294,
-    IF = 295,
-    ELSE = 296,
-    WHILE = 297,
-    FOR = 298,
-    DO = 299,
-    RETURN = 300,
-    INCLUDE = 301
+    POINTER_TO_MEMBER = 291,
+    INT = 292,
+    FLOAT = 293,
+    CHAR = 294,
+    DOUBLE = 295,
+    IF = 296,
+    ELSE = 297,
+    WHILE = 298,
+    FOR = 299,
+    DO = 300,
+    RETURN = 301,
+    INCLUDE = 302
   };
 #endif
 

@@ -8,6 +8,7 @@
 %option noyywrap warn nodefault yylineno
 
 %%
+"->"    { return POINTER_TO_MEMBER; }
 "+"	{ return ADD; }
 "-"	{ return SUB; }
 "*"	{ return MUL; }
@@ -46,6 +47,7 @@
 ","     { return COMMA; }
 ";"     { return COLON; }
 "unsigned" { return UNSIGNED; }
+
 
 \/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+\/ {/* ignore white space C Comment */}
 
