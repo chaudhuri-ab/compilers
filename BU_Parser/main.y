@@ -2,6 +2,7 @@
 
 %{
 #  include <stdio.h>
+#  include "global.h"
     extern char* yytext;
     extern int yylineno;
 %}
@@ -45,6 +46,7 @@ term: NUMBER
 %%
 main()
 {
+  symbol_table_init();
   printf("> "); 
   //yyparse();
    int tok;

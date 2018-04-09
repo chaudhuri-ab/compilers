@@ -65,10 +65,11 @@
 #line 3 "main.y" /* yacc.c:339  */
 
 #  include <stdio.h>
+#  include "global.h"
     extern char* yytext;
     extern int yylineno;
 
-#line 72 "main.tab.c" /* yacc.c:339  */
+#line 73 "main.tab.c" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -167,7 +168,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 171 "main.tab.c" /* yacc.c:358  */
+#line 172 "main.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -469,7 +470,7 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    23,    23
+       0,    24,    24
 };
 #endif
 
@@ -1244,13 +1245,13 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 23 "main.y" /* yacc.c:1646  */
+#line 24 "main.y" /* yacc.c:1646  */
     {printf("Include File: %s\n", (yyvsp[-1])); }
-#line 1250 "main.tab.c" /* yacc.c:1646  */
+#line 1251 "main.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1254 "main.tab.c" /* yacc.c:1646  */
+#line 1255 "main.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1478,10 +1479,11 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 45 "main.y" /* yacc.c:1906  */
+#line 46 "main.y" /* yacc.c:1906  */
 
 main()
 {
+  symbol_table_init();
   printf("> "); 
   //yyparse();
    int tok;
