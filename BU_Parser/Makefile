@@ -1,7 +1,7 @@
 all: compiler prog
 
 prog: *.c
-	gcc -o dist/app $^ -I . -I include/ -lm -lfl -g
+	gcc -o dist/app $^ -lm -lfl -g -I . -I include/ 
 
 compiler: clean
 	bison -d -v main.y && flex main.l
