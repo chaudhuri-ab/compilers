@@ -46,9 +46,9 @@ extern int yydebug;
   enum yytokentype
   {
     ID = 258,
-    NUMBER = 259,
-    STRING = 260,
-    CHAR_CONST = 261,
+    STRING = 259,
+    CHAR_CONST = 260,
+    NUMBER = 261,
     ADD = 262,
     SUB = 263,
     MUL = 264,
@@ -63,39 +63,56 @@ extern int yydebug;
     ASSIGN = 273,
     NOT = 274,
     UNSIGNED = 275,
-    AND = 276,
-    OR = 277,
-    BITWISE_AND = 278,
-    BITWISE_OR = 279,
-    BITWISE_XOR = 280,
-    OP = 281,
-    CP = 282,
-    LB = 283,
-    RB = 284,
-    INCREMENT = 285,
-    DECREMENT = 286,
-    EOL = 287,
-    COLON = 288,
-    PERIOD = 289,
-    COMMA = 290,
-    POINTER_TO_MEMBER = 291,
-    INT = 292,
-    FLOAT = 293,
-    CHAR = 294,
-    DOUBLE = 295,
-    IF = 296,
-    ELSE = 297,
-    WHILE = 298,
-    FOR = 299,
-    DO = 300,
-    RETURN = 301,
-    INCLUDE = 302
+    SIGNED = 276,
+    AND = 277,
+    OR = 278,
+    BITWISE_AND = 279,
+    BITWISE_OR = 280,
+    BITWISE_XOR = 281,
+    OP = 282,
+    CP = 283,
+    LB = 284,
+    RB = 285,
+    INCREMENT = 286,
+    DECREMENT = 287,
+    EOL = 288,
+    END_OF_FILE = 289,
+    COLON = 290,
+    PERIOD = 291,
+    COMMA = 292,
+    POINTER_TO_MEMBER = 293,
+    SEMI_COLON = 294,
+    INT = 295,
+    FLOAT = 296,
+    CHAR = 297,
+    DOUBLE = 298,
+    SHORT = 299,
+    LONG = 300,
+    IF = 301,
+    ELSE = 302,
+    WHILE = 303,
+    FOR = 304,
+    DO = 305,
+    RETURN = 306,
+    INCLUDE = 307
   };
 #endif
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef int YYSTYPE;
+
+union YYSTYPE
+{
+#line 14 "main.y" /* yacc.c:1909  */
+
+    int intValue;
+    double floatValue;
+    char *stringValue;
+
+#line 113 "main.tab.h" /* yacc.c:1909  */
+};
+
+typedef union YYSTYPE YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
 #endif

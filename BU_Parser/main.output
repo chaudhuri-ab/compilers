@@ -1,16 +1,8 @@
-Nonterminals useless in grammar
-
-   calclist
-   exp
-   factor
-   term
-
-
 Terminals unused in grammar
 
-   NUMBER
    STRING
    CHAR_CONST
+   NUMBER
    ADD
    SUB
    MUL
@@ -23,6 +15,7 @@ Terminals unused in grammar
    ASSIGN
    NOT
    UNSIGNED
+   SIGNED
    AND
    OR
    BITWISE_AND
@@ -35,14 +28,17 @@ Terminals unused in grammar
    INCREMENT
    DECREMENT
    EOL
+   END_OF_FILE
    COLON
-   PERIOD
    COMMA
    POINTER_TO_MEMBER
+   SEMI_COLON
    INT
    FLOAT
    CHAR
    DOUBLE
+   SHORT
+   LONG
    IF
    ELSE
    WHILE
@@ -51,138 +47,187 @@ Terminals unused in grammar
    RETURN
 
 
-Rules useless in grammar
-
-    2 calclist: %empty
-    3         | calclist exp EOL
-    4         | calclist EOL
-
-    5 exp: factor
-    6    | exp ADD exp
-    7    | exp SUB factor
-    8    | exp ABS factor
-
-    9 factor: term
-   10       | factor MUL term
-   11       | factor DIV term
-
-   12 term: NUMBER
-   13     | ABS term
-   14     | OP exp CP
-
-
 Grammar
 
-    0 $accept: include_file $end
+    0 $accept: program $end
 
-    1 include_file: INCLUDE LT ID GT
+    1 program: statements
+
+    2 statements: statements statement
+    3           | statement
+
+    4 statement: include_file
+
+    5 include_file: INCLUDE LT ID PERIOD ID GT
 
 
 Terminals, with rules where they appear
 
 $end (0) 0
 error (256)
-ID (258) 1
-NUMBER (259)
-STRING (260)
-CHAR_CONST (261)
+ID (258) 5
+STRING (259)
+CHAR_CONST (260)
+NUMBER (261)
 ADD (262)
 SUB (263)
 MUL (264)
 DIV (265)
 ABS (266)
 MOD (267)
-LT (268) 1
-GT (269) 1
+LT (268) 5
+GT (269) 5
 LEQ (270)
 GEQ (271)
 EQUAL_TO (272)
 ASSIGN (273)
 NOT (274)
 UNSIGNED (275)
-AND (276)
-OR (277)
-BITWISE_AND (278)
-BITWISE_OR (279)
-BITWISE_XOR (280)
-OP (281)
-CP (282)
-LB (283)
-RB (284)
-INCREMENT (285)
-DECREMENT (286)
-EOL (287)
-COLON (288)
-PERIOD (289)
-COMMA (290)
-POINTER_TO_MEMBER (291)
-INT (292)
-FLOAT (293)
-CHAR (294)
-DOUBLE (295)
-IF (296)
-ELSE (297)
-WHILE (298)
-FOR (299)
-DO (300)
-RETURN (301)
-INCLUDE (302) 1
+SIGNED (276)
+AND (277)
+OR (278)
+BITWISE_AND (279)
+BITWISE_OR (280)
+BITWISE_XOR (281)
+OP (282)
+CP (283)
+LB (284)
+RB (285)
+INCREMENT (286)
+DECREMENT (287)
+EOL (288)
+END_OF_FILE (289)
+COLON (290)
+PERIOD (291) 5
+COMMA (292)
+POINTER_TO_MEMBER (293)
+SEMI_COLON (294)
+INT (295)
+FLOAT (296)
+CHAR (297)
+DOUBLE (298)
+SHORT (299)
+LONG (300)
+IF (301)
+ELSE (302)
+WHILE (303)
+FOR (304)
+DO (305)
+RETURN (306)
+INCLUDE (307) 5
 
 
 Nonterminals, with rules where they appear
 
-$accept (48)
+$accept (53)
     on left: 0
-include_file (49)
+program (54)
     on left: 1, on right: 0
+statements (55)
+    on left: 2 3, on right: 1 2
+statement (56)
+    on left: 4, on right: 2 3
+include_file (57)
+    on left: 5, on right: 4
 
 
 State 0
 
-    0 $accept: . include_file $end
+    0 $accept: . program $end
 
     INCLUDE  shift, and go to state 1
 
-    include_file  go to state 2
+    program       go to state 2
+    statements    go to state 3
+    statement     go to state 4
+    include_file  go to state 5
 
 
 State 1
 
-    1 include_file: INCLUDE . LT ID GT
+    5 include_file: INCLUDE . LT ID PERIOD ID GT
 
-    LT  shift, and go to state 3
+    LT  shift, and go to state 6
 
 
 State 2
 
-    0 $accept: include_file . $end
+    0 $accept: program . $end
 
-    $end  shift, and go to state 4
+    $end  shift, and go to state 7
 
 
 State 3
 
-    1 include_file: INCLUDE LT . ID GT
+    1 program: statements .
+    2 statements: statements . statement
 
-    ID  shift, and go to state 5
+    INCLUDE  shift, and go to state 1
+
+    $default  reduce using rule 1 (program)
+
+    statement     go to state 8
+    include_file  go to state 5
 
 
 State 4
 
-    0 $accept: include_file $end .
+    3 statements: statement .
 
-    $default  accept
+    $default  reduce using rule 3 (statements)
 
 
 State 5
 
-    1 include_file: INCLUDE LT ID . GT
+    4 statement: include_file .
 
-    GT  shift, and go to state 6
+    $default  reduce using rule 4 (statement)
 
 
 State 6
 
-    1 include_file: INCLUDE LT ID GT .
+    5 include_file: INCLUDE LT . ID PERIOD ID GT
 
-    $default  reduce using rule 1 (include_file)
+    ID  shift, and go to state 9
+
+
+State 7
+
+    0 $accept: program $end .
+
+    $default  accept
+
+
+State 8
+
+    2 statements: statements statement .
+
+    $default  reduce using rule 2 (statements)
+
+
+State 9
+
+    5 include_file: INCLUDE LT ID . PERIOD ID GT
+
+    PERIOD  shift, and go to state 10
+
+
+State 10
+
+    5 include_file: INCLUDE LT ID PERIOD . ID GT
+
+    ID  shift, and go to state 11
+
+
+State 11
+
+    5 include_file: INCLUDE LT ID PERIOD ID . GT
+
+    GT  shift, and go to state 12
+
+
+State 12
+
+    5 include_file: INCLUDE LT ID PERIOD ID GT .
+
+    $default  reduce using rule 5 (include_file)

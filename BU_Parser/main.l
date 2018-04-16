@@ -8,12 +8,13 @@
 %option noyywrap warn nodefault yylineno
 
 %%
+"++"    { return INCREMENT; }
+"--"    { return DECREMENT; }
 "->"    { return POINTER_TO_MEMBER; }
 "+"	{ return ADD; }
 "-"	{ return SUB; }
 "*"	{ return MUL; }
 "/"	{ return DIV; }
-"|"     { return ABS; }
 "%"     { return MOD; }
 "="     { return ASSIGN; }
 "("     { return OP; }
@@ -28,6 +29,8 @@
 "int"   { return INT; }
 "float" { return FLOAT; }
 "char"  { return CHAR; }
+"short" { return SHORT; }
+"long"  { return LONG; }
 "double" { return DOUBLE; }
 "if"    { return IF; }
 "else"  { return ELSE; }
@@ -35,28 +38,29 @@
 "for"   { return FOR; }
 "do"    { return DO; }
 "return" { return RETURN; }
-"++"    { return INCREMENT; }
-"--"    { return DECREMENT; }
+"|"     { return BITWISE_OR; }
+"&"     { return BITWISE_AND; }
+"^"     { return BITWISE_XOR; }
 "&&"    { return AND; }
 "||"    { return OR; }
 "!"     { return NOT; }
 "."     { return PERIOD; }
-"|"     { return BITWISE_OR; }
-"&"     { return BITWISE_AND; }
-"^"     { return BITWISE_XOR; }
 ","     { return COMMA; }
-";"     { return COLON; }
+":"     { return COLON; }
+";"     {return SEMI_COLON; }
 "unsigned" { return UNSIGNED; }
+"signed"   { return SIGNED; }
+
 
 
 \/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+\/ {/* ignore white space C Comment */}
 
-"#include" {return INCLUDE; }
+[#]*[\t]*"include" {return INCLUDE; }
 
 
 (0x|0X)[a-fA-F]+ { return NUMBER; }
 ([0-9]*\.?[0-9]+|[0-9]+\.) { return NUMBER; }
-[_a-zA-Z]([a-zA-Z0-9_])* {return ID;}
+[_a-zA-Z]([a-zA-Z0-9_])* { yylval.stringValue = strdup(yytext); return ID;}
 \"(\\.|[^\\"])*\" {return STRING; }
 \'([ ]|.)\' {return CHAR_CONST; }
 
@@ -68,5 +72,7 @@
 
 .	{ sprintf(err, "Mystery character %c\n", *yytext);
         yyerror(err); }
+
+<<EOF>>     {yyterminate(); }
 %%
 
