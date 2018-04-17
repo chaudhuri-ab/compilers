@@ -33,7 +33,7 @@
 %token INCLUDE
 %%
 
-program: statements {printf("End Program\n");}
+program: statements {printf("\nEnd Program!\n");}
 ;
 
 
@@ -43,11 +43,32 @@ statements: statements statement
 ;
 
 statement: include_file
+            | direct_declaration
 ;
 
+/* Individual Statements */
 include_file: INCLUDE LT ID PERIOD ID GT {printf("[BISON - include_file] %s.%s\n",$3, $5); free($3); free($5);}
  ;
  
+ direct_declaration: type_specifier ID SEMI_COLON { printf("[BISON - Direct Declaration] %s", $2); }
+ ;
+ 
+ 
+ /* Data Type */
+ type_specifier: type
+        | SIGNED type
+        | UNSIGNED type
+ ;
+ 
+ type: CHAR
+        | SHORT
+        | INT
+        | LONG
+        | FLOAT
+        | DOUBLE
+ ;
+ 
+
 %%
 main()
 {
