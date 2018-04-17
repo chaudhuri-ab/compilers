@@ -466,8 +466,8 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    36,    36,    41,    42,    45,    46,    50,    53,    58,
-      59,    60,    63,    64,    65,    66,    67,    68
+       0,    40,    40,    45,    46,    49,    50,    54,    57,    62,
+      63,    64,    67,    68,    69,    70,    71,    72
 };
 #endif
 
@@ -1515,25 +1515,79 @@ yyreduce:
     switch (yyn)
       {
           case 2:
-#line 36 "main.y" /* yacc.c:1646  */
-    {printf("\nEnd Program!\n");}
+#line 40 "main.y" /* yacc.c:1646  */
+    {printf("End Program!\n");}
 #line 1521 "main.tab.c" /* yacc.c:1646  */
     break;
 
   case 7:
-#line 50 "main.y" /* yacc.c:1646  */
+#line 54 "main.y" /* yacc.c:1646  */
     {printf("[BISON - include_file] %s.%s\n",(yyvsp[-3].stringValue), (yyvsp[-1].stringValue)); free((yyvsp[-3].stringValue)); free((yyvsp[-1].stringValue));}
 #line 1527 "main.tab.c" /* yacc.c:1646  */
     break;
 
   case 8:
-#line 53 "main.y" /* yacc.c:1646  */
-    { printf("[BISON - Direct Declaration] %s", (yyvsp[-1].stringValue)); }
+#line 57 "main.y" /* yacc.c:1646  */
+    { printf("[BISON - Direct Declaration] %d - %s\n", (yyvsp[-2].intValue), (yyvsp[-1].stringValue)); free((yyvsp[-1].stringValue)); }
 #line 1533 "main.tab.c" /* yacc.c:1646  */
     break;
 
+  case 9:
+#line 62 "main.y" /* yacc.c:1646  */
+    {(yyval.intValue) = (yyvsp[0].intValue); }
+#line 1539 "main.tab.c" /* yacc.c:1646  */
+    break;
 
-#line 1537 "main.tab.c" /* yacc.c:1646  */
+  case 10:
+#line 63 "main.y" /* yacc.c:1646  */
+    {(yyval.intValue) = (yyvsp[0].intValue); }
+#line 1545 "main.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 11:
+#line 64 "main.y" /* yacc.c:1646  */
+    {(yyval.intValue) = (yyvsp[0].intValue); }
+#line 1551 "main.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 12:
+#line 67 "main.y" /* yacc.c:1646  */
+    {(yyval.intValue) = CHAR; }
+#line 1557 "main.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 13:
+#line 68 "main.y" /* yacc.c:1646  */
+    {(yyval.intValue) = SHORT; }
+#line 1563 "main.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 14:
+#line 69 "main.y" /* yacc.c:1646  */
+    {(yyval.intValue) = INT;}
+#line 1569 "main.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 15:
+#line 70 "main.y" /* yacc.c:1646  */
+    {(yyval.intValue) = LONG; }
+#line 1575 "main.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 16:
+#line 71 "main.y" /* yacc.c:1646  */
+    {(yyval.intValue) = FLOAT; }
+#line 1581 "main.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 17:
+#line 72 "main.y" /* yacc.c:1646  */
+    {(yyval.intValue) = DOUBLE; }
+#line 1587 "main.tab.c" /* yacc.c:1646  */
+    break;
+
+
+#line 1591 "main.tab.c" /* yacc.c:1646  */
         default: break;
       }
     if (yychar_backup != yychar)
@@ -1773,7 +1827,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 72 "main.y" /* yacc.c:1906  */
+#line 76 "main.y" /* yacc.c:1906  */
 
 main()
 {

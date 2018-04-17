@@ -31,9 +31,13 @@
 %token INT FLOAT CHAR DOUBLE SHORT LONG
 %token IF ELSE WHILE FOR DO RETURN
 %token INCLUDE
+
+%type<intValue> type type_specifier
+
 %%
 
-program: statements {printf("\nEnd Program!\n");}
+
+program: statements {printf("End Program!\n");}
 ;
 
 
@@ -50,22 +54,22 @@ statement: include_file
 include_file: INCLUDE LT ID PERIOD ID GT {printf("[BISON - include_file] %s.%s\n",$3, $5); free($3); free($5);}
  ;
  
- direct_declaration: type_specifier ID SEMI_COLON { printf("[BISON - Direct Declaration] %s", $2); }
+ direct_declaration: type_specifier ID SEMI_COLON { printf("[BISON - Direct Declaration] %d - %s\n", $1, $2); free($2); }
  ;
  
  
  /* Data Type */
- type_specifier: type
-        | SIGNED type
-        | UNSIGNED type
+ type_specifier: type {$$ = $1; }
+        | SIGNED type {$$ = $2; }
+        | UNSIGNED type {$$ = $2; }
  ;
  
- type: CHAR
-        | SHORT
-        | INT
-        | LONG
-        | FLOAT
-        | DOUBLE
+ type: CHAR {$$ = CHAR; }
+        | SHORT {$$ = SHORT; }
+        | INT {$$ = INT;}
+        | LONG {$$ = LONG; }
+        | FLOAT {$$ = FLOAT; }
+        | DOUBLE {$$ = DOUBLE; }
  ;
  
 
