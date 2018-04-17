@@ -40,6 +40,8 @@
 program: statements {printf("End Program!\n");}
 ;
 
+semi_colon_list: /* Epsilon */
+            | semi_colon_list SEMI_COLON
 
 /* Statements */
 statements: statements statement
@@ -54,7 +56,7 @@ statement: include_file
 include_file: INCLUDE LT ID PERIOD ID GT {printf("[BISON - include_file] %s.%s\n",$3, $5); free($3); free($5);}
  ;
  
- direct_declaration: type_specifier ID SEMI_COLON { printf("[BISON - Direct Declaration] %d - %s\n", $1, $2); free($2); }
+ direct_declaration: type_specifier ID semi_colon_list { printf("[BISON - Direct Declaration] %d - %s\n", $1, $2); free($2); }
  ;
  
  

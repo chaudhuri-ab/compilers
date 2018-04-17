@@ -44,33 +44,36 @@ Grammar
 
     1 program: statements
 
-    2 statements: statements statement
-    3           | statement
+    2 semi_colon_list: %empty
+    3                | semi_colon_list SEMI_COLON
 
-    4 statement: include_file
-    5          | direct_declaration
+    4 statements: statements statement
+    5           | statement
 
-    6 include_file: INCLUDE LT ID PERIOD ID GT
+    6 statement: include_file
+    7          | direct_declaration
 
-    7 direct_declaration: type_specifier ID SEMI_COLON
+    8 include_file: INCLUDE LT ID PERIOD ID GT
 
-    8 type_specifier: type
-    9               | SIGNED type
-   10               | UNSIGNED type
+    9 direct_declaration: type_specifier ID semi_colon_list
 
-   11 type: CHAR
-   12     | SHORT
-   13     | INT
-   14     | LONG
-   15     | FLOAT
-   16     | DOUBLE
+   10 type_specifier: type
+   11               | SIGNED type
+   12               | UNSIGNED type
+
+   13 type: CHAR
+   14     | SHORT
+   15     | INT
+   16     | LONG
+   17     | FLOAT
+   18     | DOUBLE
 
 
 Terminals, with rules where they appear
 
 $end (0) 0
 error (256)
-ID (258) 6 7
+ID (258) 8 9
 STRING (259)
 CHAR_CONST (260)
 NUMBER (261)
@@ -80,15 +83,15 @@ MUL (264)
 DIV (265)
 ABS (266)
 MOD (267)
-LT (268) 6
-GT (269) 6
+LT (268) 8
+GT (269) 8
 LEQ (270)
 GEQ (271)
 EQUAL_TO (272)
 ASSIGN (273)
 NOT (274)
-UNSIGNED (275) 10
-SIGNED (276) 9
+UNSIGNED (275) 12
+SIGNED (276) 11
 AND (277)
 OR (278)
 BITWISE_AND (279)
@@ -103,23 +106,23 @@ DECREMENT (287)
 EOL (288)
 END_OF_FILE (289)
 COLON (290)
-PERIOD (291) 6
+PERIOD (291) 8
 COMMA (292)
 POINTER_TO_MEMBER (293)
-SEMI_COLON (294) 7
-INT (295) 13
-FLOAT (296) 15
-CHAR (297) 11
-DOUBLE (298) 16
-SHORT (299) 12
-LONG (300) 14
+SEMI_COLON (294) 3
+INT (295) 15
+FLOAT (296) 17
+CHAR (297) 13
+DOUBLE (298) 18
+SHORT (299) 14
+LONG (300) 16
 IF (301)
 ELSE (302)
 WHILE (303)
 FOR (304)
 DO (305)
 RETURN (306)
-INCLUDE (307) 6
+INCLUDE (307) 8
 
 
 Nonterminals, with rules where they appear
@@ -128,18 +131,20 @@ $accept (53)
     on left: 0
 program (54)
     on left: 1, on right: 0
-statements (55)
-    on left: 2 3, on right: 1 2
-statement (56)
-    on left: 4 5, on right: 2 3
-include_file (57)
-    on left: 6, on right: 4
-direct_declaration (58)
-    on left: 7, on right: 5
-type_specifier (59)
-    on left: 8 9 10, on right: 7
-type (60)
-    on left: 11 12 13 14 15 16, on right: 8 9 10
+semi_colon_list (55)
+    on left: 2 3, on right: 3 9
+statements (56)
+    on left: 4 5, on right: 1 4
+statement (57)
+    on left: 6 7, on right: 4 5
+include_file (58)
+    on left: 8, on right: 6
+direct_declaration (59)
+    on left: 9, on right: 7
+type_specifier (60)
+    on left: 10 11 12, on right: 9
+type (61)
+    on left: 13 14 15 16 17 18, on right: 10 11 12
 
 
 State 0
@@ -167,7 +172,7 @@ State 0
 
 State 1
 
-   10 type_specifier: UNSIGNED . type
+   12 type_specifier: UNSIGNED . type
 
     INT     shift, and go to state 3
     FLOAT   shift, and go to state 4
@@ -181,7 +186,7 @@ State 1
 
 State 2
 
-    9 type_specifier: SIGNED . type
+   11 type_specifier: SIGNED . type
 
     INT     shift, and go to state 3
     FLOAT   shift, and go to state 4
@@ -195,49 +200,49 @@ State 2
 
 State 3
 
-   13 type: INT .
-
-    $default  reduce using rule 13 (type)
-
-
-State 4
-
-   15 type: FLOAT .
+   15 type: INT .
 
     $default  reduce using rule 15 (type)
 
 
+State 4
+
+   17 type: FLOAT .
+
+    $default  reduce using rule 17 (type)
+
+
 State 5
 
-   11 type: CHAR .
+   13 type: CHAR .
 
-    $default  reduce using rule 11 (type)
+    $default  reduce using rule 13 (type)
 
 
 State 6
 
-   16 type: DOUBLE .
+   18 type: DOUBLE .
 
-    $default  reduce using rule 16 (type)
+    $default  reduce using rule 18 (type)
 
 
 State 7
 
-   12 type: SHORT .
-
-    $default  reduce using rule 12 (type)
-
-
-State 8
-
-   14 type: LONG .
+   14 type: SHORT .
 
     $default  reduce using rule 14 (type)
 
 
+State 8
+
+   16 type: LONG .
+
+    $default  reduce using rule 16 (type)
+
+
 State 9
 
-    6 include_file: INCLUDE . LT ID PERIOD ID GT
+    8 include_file: INCLUDE . LT ID PERIOD ID GT
 
     LT  shift, and go to state 19
 
@@ -252,7 +257,7 @@ State 10
 State 11
 
     1 program: statements .
-    2 statements: statements . statement
+    4 statements: statements . statement
 
     UNSIGNED  shift, and go to state 1
     SIGNED    shift, and go to state 2
@@ -275,56 +280,56 @@ State 11
 
 State 12
 
-    3 statements: statement .
+    5 statements: statement .
 
-    $default  reduce using rule 3 (statements)
+    $default  reduce using rule 5 (statements)
 
 
 State 13
 
-    4 statement: include_file .
+    6 statement: include_file .
 
-    $default  reduce using rule 4 (statement)
+    $default  reduce using rule 6 (statement)
 
 
 State 14
 
-    5 statement: direct_declaration .
+    7 statement: direct_declaration .
 
-    $default  reduce using rule 5 (statement)
+    $default  reduce using rule 7 (statement)
 
 
 State 15
 
-    7 direct_declaration: type_specifier . ID SEMI_COLON
+    9 direct_declaration: type_specifier . ID semi_colon_list
 
     ID  shift, and go to state 22
 
 
 State 16
 
-    8 type_specifier: type .
-
-    $default  reduce using rule 8 (type_specifier)
-
-
-State 17
-
-   10 type_specifier: UNSIGNED type .
+   10 type_specifier: type .
 
     $default  reduce using rule 10 (type_specifier)
 
 
+State 17
+
+   12 type_specifier: UNSIGNED type .
+
+    $default  reduce using rule 12 (type_specifier)
+
+
 State 18
 
-    9 type_specifier: SIGNED type .
+   11 type_specifier: SIGNED type .
 
-    $default  reduce using rule 9 (type_specifier)
+    $default  reduce using rule 11 (type_specifier)
 
 
 State 19
 
-    6 include_file: INCLUDE LT . ID PERIOD ID GT
+    8 include_file: INCLUDE LT . ID PERIOD ID GT
 
     ID  shift, and go to state 23
 
@@ -338,48 +343,60 @@ State 20
 
 State 21
 
-    2 statements: statements statement .
+    4 statements: statements statement .
 
-    $default  reduce using rule 2 (statements)
+    $default  reduce using rule 4 (statements)
 
 
 State 22
 
-    7 direct_declaration: type_specifier ID . SEMI_COLON
+    9 direct_declaration: type_specifier ID . semi_colon_list
 
-    SEMI_COLON  shift, and go to state 24
+    $default  reduce using rule 2 (semi_colon_list)
+
+    semi_colon_list  go to state 24
 
 
 State 23
 
-    6 include_file: INCLUDE LT ID . PERIOD ID GT
+    8 include_file: INCLUDE LT ID . PERIOD ID GT
 
     PERIOD  shift, and go to state 25
 
 
 State 24
 
-    7 direct_declaration: type_specifier ID SEMI_COLON .
+    3 semi_colon_list: semi_colon_list . SEMI_COLON
+    9 direct_declaration: type_specifier ID semi_colon_list .
 
-    $default  reduce using rule 7 (direct_declaration)
+    SEMI_COLON  shift, and go to state 26
+
+    $default  reduce using rule 9 (direct_declaration)
 
 
 State 25
 
-    6 include_file: INCLUDE LT ID PERIOD . ID GT
+    8 include_file: INCLUDE LT ID PERIOD . ID GT
 
-    ID  shift, and go to state 26
+    ID  shift, and go to state 27
 
 
 State 26
 
-    6 include_file: INCLUDE LT ID PERIOD ID . GT
+    3 semi_colon_list: semi_colon_list SEMI_COLON .
 
-    GT  shift, and go to state 27
+    $default  reduce using rule 3 (semi_colon_list)
 
 
 State 27
 
-    6 include_file: INCLUDE LT ID PERIOD ID GT .
+    8 include_file: INCLUDE LT ID PERIOD ID . GT
 
-    $default  reduce using rule 6 (include_file)
+    GT  shift, and go to state 28
+
+
+State 28
+
+    8 include_file: INCLUDE LT ID PERIOD ID GT .
+
+    $default  reduce using rule 8 (include_file)

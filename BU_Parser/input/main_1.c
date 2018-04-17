@@ -6,7 +6,7 @@
 #include <stdlib.h>
 
 int test;
-char test2;
+char test2;;
 int test44;
 
 
