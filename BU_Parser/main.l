@@ -17,8 +17,8 @@
 "/"	{ return DIV; }
 "%"     { return MOD; }
 "="     { return ASSIGN; }
-"("     { return OP; }
-")"     { return CP; }
+"("     { return LP; }
+")"     { return RP; }
 "{"     { return LB; }
 "}"     { return RB;}
 "["     { return LBRACKET; }

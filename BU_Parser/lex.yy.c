@@ -933,12 +933,12 @@ YY_RULE_SETUP
 case 10:
 YY_RULE_SETUP
 #line 20 "main.l"
-{ return OP; }
+{ return LP; }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
 #line 21 "main.l"
-{ return CP; }
+{ return RP; }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP

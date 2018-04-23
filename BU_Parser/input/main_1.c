@@ -10,10 +10,11 @@ char test2;;
 char test33 [] = "tt";
 int test44;
 
+int function1(int test222);
 
-int main(int args, char** argv){
+int main(){
     
     
-    return 0;
+    int test;
 }
 

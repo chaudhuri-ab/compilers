@@ -27,7 +27,7 @@
 %token MUL DIV ABS MOD 
 %token LT GT LEQ GEQ EQUAL_TO ASSIGN NOT UNSIGNED SIGNED
 %token AND OR BITWISE_AND BITWISE_OR BITWISE_XOR
-%token OP CP LB RB LBRACKET RBRACKET
+%token LP RP LB RB LBRACKET RBRACKET
 %token INCREMENT DECREMENT
 %token EOL END_OF_FILE
 %token COLON PERIOD COMMA POINTER_TO_MEMBER SEMI_COLON
@@ -53,9 +53,10 @@ statements: statements statement
 
 statement: include_file
             | direct_declaration
+            | function_declaration
 ;
 
-/* Individual Statements */
+/* Include File */
 include_file: INCLUDE LT ID PERIOD ID GT {printf("[BISON - include_file] %s.%s\n",$3, $5); free($3); free($5);}
  ;
  
@@ -69,7 +70,7 @@ include_file: INCLUDE LT ID PERIOD ID GT {printf("[BISON - include_file] %s.%s\n
  
  type_specifier: type %prec "type_spec" {$$ = $1; }
         | SIGNED type {$$ = $2; }
-        | UNSIGNED type {$$ = $2; }
+        | UNSIGNED type {$$ = $2 & 0x80000000; }
  ;
  
  type: CHAR {$$ = CHAR; }
@@ -83,7 +84,7 @@ include_file: INCLUDE LT ID PERIOD ID GT {printf("[BISON - include_file] %s.%s\n
 
  /* Type List */
  
- type_specifier_list: /* epsilon */
+ type_specifier_list: type_specifier
         | type_specifier_list COMMA type_specifier
  
  ;
@@ -91,11 +92,14 @@ include_file: INCLUDE LT ID PERIOD ID GT {printf("[BISON - include_file] %s.%s\n
  
  /* Parameter List */
  parameter_specifier_list: /* epsilon */
-        | parameter_specifier_list COMMA type_specifier ID {printf("[BISON - Direct Declaration]");}
+        | type_specifier ID
+        | parameter_specifier_list COMMA type_specifier ID
  ;
  
  /* Function Declaration & Direct Variable Declaration */
-
+ function_declaration: type_specifier ID LP parameter_specifier_list RP semi_colon_list{ printf("[BISON - FCN Declaration] %d - %s\n", $1, $2); free($2); }
+        | type_specifier ID LP parameter_specifier_list RP LB statements RB{ printf("[BISON - FCN Declaration] %d - %s\n", $1, $2); free($2); }
+ ;
 %%
 main()
 {
