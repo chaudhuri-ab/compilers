@@ -10,6 +10,9 @@
 %}
 %define parse.lac full
 
+%nonassoc LBRACKET
+%nonassoc "type_spec"
+
 %union
 {
     int intValue;
@@ -24,7 +27,7 @@
 %token MUL DIV ABS MOD 
 %token LT GT LEQ GEQ EQUAL_TO ASSIGN NOT UNSIGNED SIGNED
 %token AND OR BITWISE_AND BITWISE_OR BITWISE_XOR
-%token OP CP LB RB
+%token OP CP LB RB LBRACKET RBRACKET
 %token INCREMENT DECREMENT
 %token EOL END_OF_FILE
 %token COLON PERIOD COMMA POINTER_TO_MEMBER SEMI_COLON
@@ -57,11 +60,14 @@ include_file: INCLUDE LT ID PERIOD ID GT {printf("[BISON - include_file] %s.%s\n
  ;
  
  direct_declaration: type_specifier ID semi_colon_list { printf("[BISON - Direct Declaration] %d - %s\n", $1, $2); free($2); }
+            | type_specifier ID LBRACKET RBRACKET ASSIGN STRING semi_colon_list { printf("[BISON - String Literal Declaration] - %s=%s\n", $2, $6); free($2); free($6); } 
  ;
  
  
  /* Data Type */
- type_specifier: type {$$ = $1; }
+
+ 
+ type_specifier: type %prec "type_spec" {$$ = $1; }
         | SIGNED type {$$ = $2; }
         | UNSIGNED type {$$ = $2; }
  ;
@@ -74,6 +80,21 @@ include_file: INCLUDE LT ID PERIOD ID GT {printf("[BISON - include_file] %s.%s\n
         | DOUBLE {$$ = DOUBLE; }
  ;
  
+
+ /* Type List */
+ 
+ type_specifier_list: /* epsilon */
+        | type_specifier_list COMMA type_specifier
+ 
+ ;
+ 
+ 
+ /* Parameter List */
+ parameter_specifier_list: /* epsilon */
+        | parameter_specifier_list COMMA type_specifier ID {printf("[BISON - Direct Declaration]");}
+ ;
+ 
+ /* Function Declaration & Direct Variable Declaration */
 
 %%
 main()

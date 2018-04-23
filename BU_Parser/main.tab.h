@@ -45,56 +45,58 @@ extern int yydebug;
 # define YYTOKENTYPE
   enum yytokentype
   {
-    ID = 258,
-    STRING = 259,
-    CHAR_CONST = 260,
-    NUMBER = 261,
-    ADD = 262,
-    SUB = 263,
-    MUL = 264,
-    DIV = 265,
-    ABS = 266,
-    MOD = 267,
-    LT = 268,
-    GT = 269,
-    LEQ = 270,
-    GEQ = 271,
-    EQUAL_TO = 272,
-    ASSIGN = 273,
-    NOT = 274,
-    UNSIGNED = 275,
-    SIGNED = 276,
-    AND = 277,
-    OR = 278,
-    BITWISE_AND = 279,
-    BITWISE_OR = 280,
-    BITWISE_XOR = 281,
-    OP = 282,
-    CP = 283,
-    LB = 284,
-    RB = 285,
-    INCREMENT = 286,
-    DECREMENT = 287,
-    EOL = 288,
-    END_OF_FILE = 289,
-    COLON = 290,
-    PERIOD = 291,
-    COMMA = 292,
-    POINTER_TO_MEMBER = 293,
-    SEMI_COLON = 294,
-    INT = 295,
-    FLOAT = 296,
-    CHAR = 297,
-    DOUBLE = 298,
-    SHORT = 299,
-    LONG = 300,
-    IF = 301,
-    ELSE = 302,
-    WHILE = 303,
-    FOR = 304,
-    DO = 305,
-    RETURN = 306,
-    INCLUDE = 307
+    LBRACKET = 258,
+    ID = 260,
+    STRING = 261,
+    CHAR_CONST = 262,
+    NUMBER = 263,
+    ADD = 264,
+    SUB = 265,
+    MUL = 266,
+    DIV = 267,
+    ABS = 268,
+    MOD = 269,
+    LT = 270,
+    GT = 271,
+    LEQ = 272,
+    GEQ = 273,
+    EQUAL_TO = 274,
+    ASSIGN = 275,
+    NOT = 276,
+    UNSIGNED = 277,
+    SIGNED = 278,
+    AND = 279,
+    OR = 280,
+    BITWISE_AND = 281,
+    BITWISE_OR = 282,
+    BITWISE_XOR = 283,
+    OP = 284,
+    CP = 285,
+    LB = 286,
+    RB = 287,
+    RBRACKET = 288,
+    INCREMENT = 289,
+    DECREMENT = 290,
+    EOL = 291,
+    END_OF_FILE = 292,
+    COLON = 293,
+    PERIOD = 294,
+    COMMA = 295,
+    POINTER_TO_MEMBER = 296,
+    SEMI_COLON = 297,
+    INT = 298,
+    FLOAT = 299,
+    CHAR = 300,
+    DOUBLE = 301,
+    SHORT = 302,
+    LONG = 303,
+    IF = 304,
+    ELSE = 305,
+    WHILE = 306,
+    FOR = 307,
+    DO = 308,
+    RETURN = 309,
+    INCLUDE = 310
   };
 #endif
 
@@ -103,13 +105,13 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 14 "main.y" /* yacc.c:1909  */
+#line 17 "main.y" /* yacc.c:1909  */
 
     int intValue;
     double floatValue;
     char *stringValue;
 
-#line 113 "main.tab.h" /* yacc.c:1909  */
+#line 115 "main.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

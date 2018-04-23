@@ -21,6 +21,8 @@
 ")"     { return CP; }
 "{"     { return LB; }
 "}"     { return RB;}
+"["     { return LBRACKET; }
+"]"     { return RBRACKET; }
 "<"     { return LT; }
 ">"     { return GT; }
 "<="    { return LEQ; }
@@ -61,7 +63,7 @@
 (0x|0X)[a-fA-F]+ { return NUMBER; }
 ([0-9]*\.?[0-9]+|[0-9]+\.) { return NUMBER; }
 [_a-zA-Z]([a-zA-Z0-9_])* { yylval.stringValue = strdup(yytext); return ID;}
-\"(\\.|[^\\"])*\" {return STRING; }
+\"(\\.|[^\\"])*\" {yylval.stringValue = strdup(yytext); return STRING; }
 \'([ ]|.)\' {return CHAR_CONST; }
 
 

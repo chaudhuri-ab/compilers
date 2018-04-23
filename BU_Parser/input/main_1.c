@@ -7,6 +7,13 @@
 
 int test;
 char test2;;
+char test33 [] = "tt";
 int test44;
 
+
+int main(int args, char** argv){
+    
+    
+    return 0;
+}
 
